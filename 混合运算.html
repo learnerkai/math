@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小学三年级数学混合运算</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #e0f7fa, #bbdefb);
+            color: #2c3e50;
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            background: rgba(255, 255, 255, 0.97);
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            position: relative;
+            padding: 25px;
+        }
+        
+        .floating-icons {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .floating-icon {
+            position: absolute;
+            font-size: 2.5rem;
+            opacity: 0.1;
+            color: #0288d1;
+            animation: float 15s infinite linear;
+        }
+        
+        @keyframes float {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(20px, 15px) rotate(10deg); }
+            50% { transform: translate(0, 30px) rotate(0deg); }
+            75% { transform: translate(-20px, 15px) rotate(-10deg); }
+            100% { transform: translate(0, 0) rotate(0deg); }
+        }
+        
+        header {
+            text-align: center;
+            padding: 25px;
+            background: linear-gradient(90deg, #42a5f5, #0288d1);
+            color: white;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .section {
+            background: linear-gradient(135deg, #f8fbff, #ffffff);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e1f5fe;
+            position: relative;
+            z-index: 1;
+            transition: transform 0.3s ease;
+        }
+        
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12);
+        }
+        
+        h2 {
+            color: #0277bd;
+            margin-bottom: 25px;
+            padding-bottom: 12px;
+            border-bottom: 3px solid #4fc3f7;
+            font-size: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        h2 i {
+            background: #e1f5fe;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        
+        .learning-goals ul {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 18px;
+            padding-left: 20px;
+        }
+        
+        .learning-goals li {
+            background: linear-gradient(to right, #e1f5fe, #f5fcff);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            list-style: none;
+            display: flex;
+            align-items: center;
+            font-size: 1.15rem;
+            border-left: 5px solid #0288d1;
+        }
+        
+        .learning-goals li::before {
+            content: "✓";
+            color: #0288d1;
+            font-weight: bold;
+            margin-right: 15px;
+            font-size: 1.5rem;
+            background: #e1f5fe;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        
+        .rule-cards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            margin: 30px 0;
+            justify-content: center;
+        }
+        
+        .rule-card {
+            flex: 1;
+            min-width: 250px;
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            border-top: 5px solid #42a5f5;
+            transition: all 0.4s ease;
+        }
+        
+        .rule-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .rule-card h3 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #01579b;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+        
+        .rule-card .number {
+            background: #0288d1;
+            color: white;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-weight: bold;
+        }
+        
+        .rule-card .example {
+            background: #e1f5fe;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            text-align: center;
+        }
+        
+        .example-section {
+            background: #f1f8e9;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+            border-left: 5px solid #7cb342;
+        }
+        
+        .example-section h3 {
+            color: #33691e;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .example-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            position: relative;
+        }
+        
+        .example-card h4 {
+            color: #0277bd;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .problem {
+            background: #e1f5fe;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            text-align: center;
+        }
+        
+        .solution {
+            background: #e8f5e9;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .solution::before {
+            content: "解答";
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: #4caf50;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 0 0 15px 0;
+            font-size: 0.9rem;
+        }
+        
+        .step {
+            margin-bottom: 15px;
+            padding-left: 30px;
+            position: relative;
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all 0.5s ease;
+            height: 0;
+            overflow: hidden;
+        }
+        
+        .step.show {
+            opacity: 1;
+            transform: translateX(0);
+            height: auto;
+            margin-bottom: 15px;
+        }
+        
+        .step::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: #0288d1;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .solution-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .solution-btn {
+            padding: 10px 20px;
+            background: #42a5f5;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .solution-btn:hover {
+            background: #0288d1;
+            transform: translateY(-3px);
+        }
+        
+        .solution-btn:active {
+            transform: translateY(0);
+        }
+        
+        .test-section {
+            background: linear-gradient(135deg, #e1f5fe, #f5fcff);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+            border: 2px dashed #0288d1;
+        }
+        
+        .test-section h3 {
+            color: #0277bd;
+            margin-bottom: 25px;
+            text-align: center;
+            font-size: 1.8rem;
+        }
+        
+        .question {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+        
+        .question h4 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            color: #01579b;
+        }
+        
+        .question .number {
+            background: #0288d1;
+            color: white;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-weight: bold;
+        }
+        
+        .options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .option {
+            background: #e1f5fe;
+            padding: 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .option:hover {
+            background: #bbdefb;
+            transform: translateX(10px);
+        }
+        
+        .option.selected {
+            background: #0288d1;
+            color: white;
+            box-shadow: 0 0 0 3px #81d4fa;
+        }
+        
+        .option .letter {
+            background: white;
+            color: #0288d1;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-weight: bold;
+        }
+        
+        .option.selected .letter {
+            background: #81d4fa;
+            color: white;
+        }
+        
+        .input-question {
+            margin-top: 20px;
+        }
+        
+        .input-question input {
+            width: 200px;
+            padding: 12px;
+            border: 2px solid #0288d1;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .input-question input:focus {
+            border-color: #4caf50;
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.3);
+            outline: none;
+        }
+        
+        .submit-btn {
+            display: block;
+            margin: 30px auto 0;
+            padding: 15px 40px;
+            background: linear-gradient(90deg, #42a5f5, #0288d1);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+        
+        .submit-btn::after {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: rotate(30deg);
+            transition: all 0.5s ease;
+        }
+        
+        .submit-btn:hover::after {
+            transform: rotate(30deg) translate(50%, 50%);
+        }
+        
+        .summary {
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(135deg, #e8f5e9, #f1f8e9);
+            border-radius: 20px;
+            margin-top: 20px;
+        }
+        
+        .key-points {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 25px;
+        }
+        
+        .key-point {
+            background: linear-gradient(45deg, #c8e6c9, #a5d6a7);
+            padding: 18px 30px;
+            border-radius: 50px;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #546e7a;
+            font-size: 1.1rem;
+            margin-top: 30px;
+        }
+        
+        .result-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        
+        .result-content {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            transform: translateY(30px);
+            transition: transform 0.5s ease;
+        }
+        
+        .result-overlay.show {
+            opacity: 1;
+            pointer-events: all;
+        }
+        
+        .result-overlay.show .result-content {
+            transform: translateY(0);
+        }
+        
+        .result-title {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #0277bd;
+        }
+        
+        .score {
+            font-size: 4rem;
+            font-weight: bold;
+            color: #4caf50;
+            margin: 20px 0;
+            text-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+        }
+        
+        .feedback {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+        }
+        
+        .close-btn {
+            padding: 12px 30px;
+            background: #0288d1;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .close-btn:hover {
+            background: #0277bd;
+            transform: scale(1.05);
+        }
+        
+        @media (max-width: 768px) {
+            .rule-cards, .options {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .container {
+                padding: 15px;
+            }
+            
+            .problem, .solution {
+                padding: 15px;
+            }
+            
+            .solution-controls {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="floating-icons">
+            <div class="floating-icon" style="top:10%; left:5%;">+</div>
+            <div class="floating-icon" style="top:25%; right:7%;">-</div>
+            <div class="floating-icon" style="bottom:15%; left:8%;">×</div>
+            <div class="floating-icon" style="bottom:30%; right:10%;">÷</div>
+            <div class="floating-icon" style="top:40%; left:20%;">=</div>
+            <div class="floating-icon" style="top:60%; right:25%;">( )</div>
+        </div>
+        
+        <header>
+            <h1><i class="fas fa-calculator"></i> 混合运算</h1>
+            <p class="subtitle">小学三年级数学上册 - 掌握混合运算的规则与方法</p>
+        </header>
+        
+        <section class="section learning-goals">
+            <h2><i class="fas fa-bullseye"></i> 学习目标</h2>
+            <ul>
+                <li>理解混合运算的基本概念和运算顺序</li>
+                <li>掌握加减乘除混合运算的规则</li>
+                <li>学会使用括号改变运算顺序</li>
+                <li>能够解决实际生活中的混合运算问题</li>
+                <li>通过练习提高计算准确性和速度</li>
+            </ul>
+        </section>
+        
+        <section class="section">
+            <h2><i class="fas fa-ruler-combined"></i> 混合运算规则</h2>
+            <div class="rule-cards">
+                <div class="rule-card">
+                    <h3><span class="number">1</span> 先乘除后加减</h3>
+                    <p>在混合运算中，要先计算乘法和除法，然后再计算加法和减法。</p>
+                    <div class="example">25 + 3 × 4 = 25 + 12 = 37</div>
+                </div>
+                
+                <div class="rule-card">
+                    <h3><span class="number">2</span> 从左到右依次计算</h3>
+                    <p>同一级别的运算（如都是加减或都是乘除）要从左到右依次计算。</p>
+                    <div class="example">18 ÷ 3 × 2 = 6 × 2 = 12</div>
+                </div>
+                
+                <div class="rule-card">
+                    <h3><span class="number">3</span> 括号优先原则</h3>
+                    <p>有括号的算式，要先算括号里面的，再算括号外面的。</p>
+                    <div class="example">(15 - 3) × 4 = 12 × 4 = 48</div>
+                </div>
+            </div>
+            
+            <div class="example-section">
+                <h3><i class="fas fa-lightbulb"></i> 重要提示</h3>
+                <p>混合运算就像我们生活中的规则：先做重要的事情（乘除），再做次要的事情（加减）。括号就像老师说"这个先做"，所以我们要特别关注括号里的运算。</p>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2><i class="fas fa-book-open"></i> 例题讲解</h2>
+            
+            <div class="example-card" id="example1">
+                <h4><i class="fas fa-pencil-alt"></i> 例题一：基本混合运算</h4>
+                <div class="problem">计算：8 + 3 × 5 - 4</div>
+                <div class="solution">
+                    <div class="solution-controls">
+                        <button class="solution-btn" id="showEx1">
+                            <i class="fas fa-play-circle"></i> 显示解答
+                        </button>
+                        <button class="solution-btn" id="nextEx1" style="display: none;">
+                            <i class="fas fa-arrow-right"></i> 下一步
+                        </button>
+                    </div>
+                    <div class="step" id="ex1-step1">先算乘法：3 × 5 = 15</div>
+                    <div class="step" id="ex1-step2">算式变为：8 + 15 - 4</div>
+                    <div class="step" id="ex1-step3">从左到右计算：8 + 15 = 23</div>
+                    <div class="step" id="ex1-step4">然后：23 - 4 = 19</div>
+                    <div class="step" id="ex1-step5" style="font-weight: bold; color: #d32f2f; margin-top: 15px;">最终答案：19</div>
+                </div>
+            </div>
+            
+            <div class="example-card" id="example2">
+                <h4><i class="fas fa-pencil-alt"></i> 例题二：带括号的混合运算</h4>
+                <div class="problem">计算：(20 - 5) × 3 + 10 ÷ 2</div>
+                <div class="solution">
+                    <div class="solution-controls">
+                        <button class="solution-btn" id="showEx2">
+                            <i class="fas fa-play-circle"></i> 显示解答
+                        </button>
+                        <button class="solution-btn" id="nextEx2" style="display: none;">
+                            <i class="fas fa-arrow-right"></i> 下一步
+                        </button>
+                    </div>
+                    <div class="step" id="ex2-step1">先算括号里的：20 - 5 = 15</div>
+                    <div class="step" id="ex2-step2">算式变为：15 × 3 + 10 ÷ 2</div>
+                    <div class="step" id="ex2-step3">乘除同时计算：15 × 3 = 45；10 ÷ 2 = 5</div>
+                    <div class="step" id="ex2-step4">算式变为：45 + 5 = 50</div>
+                    <div class="step" id="ex2-step5" style="font-weight: bold; color: #d32f2f; margin-top: 15px;">最终答案：50</div>
+                </div>
+            </div>
+            
+            <div class="example-card" id="example3">
+                <h4><i class="fas fa-pencil-alt"></i> 例题三：实际应用题</h4>
+                <div class="problem">小明有50元钱，他买了3本笔记本，每本8元，又买了2支笔，每支5元。他还剩下多少钱？</div>
+                <div class="solution">
+                    <div class="solution-controls">
+                        <button class="solution-btn" id="showEx3">
+                            <i class="fas fa-play-circle"></i> 显示解答
+                        </button>
+                        <button class="solution-btn" id="nextEx3" style="display: none;">
+                            <i class="fas fa-arrow-right"></i> 下一步
+                        </button>
+                    </div>
+                    <div class="step" id="ex3-step1">先计算笔记本的总价：3 × 8 = 24元</div>
+                    <div class="step" id="ex3-step2">再计算笔的总价：2 × 5 = 10元</div>
+                    <div class="step" id="ex3-step3">计算总共花了多少钱：24 + 10 = 34元</div>
+                    <div class="step" id="ex3-step4">计算剩余的钱：50 - 34 = 16元</div>
+                    <div class="step" id="ex3-step5" style="font-weight: bold; color: #d32f2f; margin-top: 15px;">综合算式：50 - (3×8 + 2×5) = 50 - (24+10) = 50 - 34 = 16元</div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section test-section">
+            <h2><i class="fas fa-tasks"></i> 随堂测试</h2>
+            
+            <div class="question" id="q1">
+                <h4><span class="number">1</span> 计算：12 + 6 × 3 - 4 = ?</h4>
+                <div class="options">
+                    <div class="option" data-answer="A">
+                        <div class="letter">A</div>
+                        <div>38</div>
+                    </div>
+                    <div class="option" data-answer="B">
+                        <div class="letter">B</div>
+                        <div>26</div>
+                    </div>
+                    <div class="option" data-answer="C">
+                        <div class="letter">C</div>
+                        <div>50</div>
+                    </div>
+                    <div class="option" data-answer="D">
+                        <div class="letter">D</div>
+                        <div>42</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question" id="q2">
+                <h4><span class="number">2</span> 计算：24 ÷ (6 - 2) × 3 = ?</h4>
+                <div class="options">
+                    <div class="option" data-answer="A">
+                        <div class="letter">A</div>
+                        <div>12</div>
+                    </div>
+                    <div class="option" data-answer="B">
+                        <div class="letter">B</div>
+                        <div>18</div>
+                    </div>
+                    <div class="option" data-answer="C">
+                        <div class="letter">C</div>
+                        <div>24</div>
+                    </div>
+                    <div class="option" data-answer="D">
+                        <div class="letter">D</div>
+                        <div>6</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question" id="q3">
+                <h4><span class="number">3</span> 计算：5 × 4 + 15 ÷ 3 - 2 = ?</h4>
+                <div class="input-question">
+                    <p>请在下面输入你的答案：</p>
+                    <input type="number" id="answer3" placeholder="输入计算结果">
+                </div>
+            </div>
+            
+            <div class="question" id="q4">
+                <h4><span class="number">4</span> 应用题：一箱苹果有30个，小明家买了4箱，吃了25个，还剩多少个苹果？</h4>
+                <div class="input-question">
+                    <p>请列式计算：</p>
+                    <input type="text" id="equation4" placeholder="例如：30×4-25" style="width: 300px;">
+                    <p style="margin-top: 15px;">计算结果：</p>
+                    <input type="number" id="answer4" placeholder="输入剩余苹果数">
+                </div>
+            </div>
+            
+            <button class="submit-btn">提交答案</button>
+        </section>
+        
+        <section class="summary">
+            <h2><i class="fas fa-graduation-cap"></i> 学习总结</h2>
+            <p style="margin: 25px 0; font-size: 1.3rem; line-height: 1.7;">
+                混合运算就像做事情要有先后顺序，记住我们的口诀：<strong>"先乘除，后加减，括号里面最优先"</strong>。多做练习，你一定能成为计算小能手！
+            </p>
+            <div class="key-points">
+                <div class="key-point">
+                    <i class="fas fa-times"></i> 先乘除
+                </div>
+                <div class="key-point">
+                    <i class="fas fa-plus"></i> 后加减
+                </div>
+                <div class="key-point">
+                    <i class="fas fa-brackets-curly"></i> 括号优先
+                </div>
+                <div class="key-point">
+                    <i class="fas fa-arrow-right"></i> 从左到右
+                </div>
+            </div>
+        </section>
+        
+        <footer>
+            <p>小学三年级数学上册 - 混合运算教学课件</p>
+            <p>勤练习，多思考，数学其实很有趣！</p>
+        </footer>
+    </div>
+    
+    <div class="result-overlay" id="resultOverlay">
+        <div class="result-content">
+            <h2 class="result-title">测试结果</h2>
+            <div class="score" id="score">0/4</div>
+            <div class="feedback" id="feedback">再练习一下，你会更棒的！</div>
+            <button class="close-btn">关闭</button>
+        </div>
+    </div>
+
+    <script>
+        // 添加浮动图标
+        const floatingIcons = document.querySelector('.floating-icons');
+        const operators = ['+', '-', '×', '÷', '=', '(', ')', '>', '<'];
+        
+        for (let i = 0; i < 12; i++) {
+            const icon = document.createElement('div');
+            icon.className = 'floating-icon';
+            icon.textContent = operators[Math.floor(Math.random() * operators.length)];
+            icon.style.top = `${Math.random() * 100}%`;
+            icon.style.left = `${Math.random() * 100}%`;
+            icon.style.animationDelay = `${Math.random() * 10}s`;
+            floatingIcons.appendChild(icon);
+        }
+        
+        // 选择题功能
+        const options = document.querySelectorAll('.option');
+        options.forEach(option => {
+            option.addEventListener('click', () => {
+                // 移除同题目的其他选择
+                const question = option.closest('.question');
+                question.querySelectorAll('.option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                
+                option.classList.add('selected');
+            });
+        });
+        
+        // 提交按钮
+        const submitBtn = document.querySelector('.submit-btn');
+        const resultOverlay = document.getElementById('resultOverlay');
+        const scoreElement = document.getElementById('score');
+        const feedbackElement = document.getElementById('feedback');
+        
+        submitBtn.addEventListener('click', () => {
+            let correctCount = 0;
+            const totalQuestions = 4;
+            
+            // 问题1检查
+            const q1Selected = document.querySelector('#q1 .option.selected');
+            if (q1Selected && q1Selected.dataset.answer === 'B') {
+                q1Selected.style.background = '#a5d6a7';
+                correctCount++;
+            } else if (q1Selected) {
+                q1Selected.style.background = '#ffab91';
+            }
+            
+            // 问题2检查
+            const q2Selected = document.querySelector('#q2 .option.selected');
+            if (q2Selected && q2Selected.dataset.answer === 'B') {
+                q2Selected.style.background = '#a5d6a7';
+                correctCount++;
+            } else if (q2Selected) {
+                q2Selected.style.background = '#ffab91';
+            }
+            
+            // 问题3检查
+            const q3Answer = document.getElementById('answer3');
+            if (q3Answer.value === '23') {
+                q3Answer.style.background = '#a5d6a7';
+                correctCount++;
+            } else if (q3Answer.value) {
+                q3Answer.style.background = '#ffab91';
+            }
+            
+            // 问题4检查
+            const q4Equation = document.getElementById('equation4');
+            const q4Answer = document.getElementById('answer4');
+            // 答案正确且列式非空就算正确
+            if (q4Answer.value === '95' && q4Equation.value.trim() !== '') {
+                q4Equation.style.background = '#a5d6a7';
+                q4Answer.style.background = '#a5d6a7';
+                correctCount++;
+            } else if (q4Answer.value || q4Equation.value) {
+                // 如果只填写了其中一个，也标记错误
+                q4Equation.style.background = '#ffab91';
+                q4Answer.style.background = '#ffab91';
+            }
+            
+            // 显示结果
+            scoreElement.textContent = `${correctCount}/${totalQuestions}`;
+            
+            if (correctCount === totalQuestions) {
+                feedbackElement.textContent = "太棒了！你真是个数学小天才！";
+                feedbackElement.style.color = "#4caf50";
+            } else if (correctCount >= 3) {
+                feedbackElement.textContent = "做得很好！继续加油！";
+                feedbackElement.style.color = "#0288d1";
+            } else if (correctCount >= 2) {
+                feedbackElement.textContent = "还不错，再多练习一下！";
+                feedbackElement.style.color = "#ff9800";
+            } else {
+                feedbackElement.textContent = "再练习一下，你会更棒的！";
+                feedbackElement.style.color = "#f44336";
+            }
+            
+            resultOverlay.classList.add('show');
+        });
+        
+        // 关闭结果弹窗
+        document.querySelector('.close-btn').addEventListener('click', () => {
+            resultOverlay.classList.remove('show');
+        });
+        
+        // 例题解答控制功能
+        function setupExampleControls(exampleId, showBtnId, nextBtnId, stepPrefix, stepCount) {
+            const showBtn = document.getElementById(showBtnId);
+            const nextBtn = document.getElementById(nextBtnId);
+            let currentStep = 0;
+            
+            showBtn.addEventListener('click', () => {
+                showBtn.style.display = 'none';
+                nextBtn.style.display = 'flex';
+                currentStep = 0;
+                showNextStep();
+            });
+            
+            nextBtn.addEventListener('click', showNextStep);
+            
+            function showNextStep() {
+                if (currentStep < stepCount) {
+                    const stepElement = document.getElementById(`${stepPrefix}-step${currentStep + 1}`);
+                    stepElement.classList.add('show');
+                    currentStep++;
+                    
+                    if (currentStep === stepCount) {
+                        nextBtn.innerHTML = '<i class="fas fa-redo"></i> 重新开始';
+                        nextBtn.onclick = resetExample;
+                    }
+                }
+            }
+            
+            function resetExample() {
+                // 隐藏所有步骤
+                for (let i = 1; i <= stepCount; i++) {
+                    const stepElement = document.getElementById(`${stepPrefix}-step${i}`);
+                    stepElement.classList.remove('show');
+                }
+                
+                // 重置按钮状态
+                nextBtn.style.display = 'none';
+                showBtn.style.display = 'flex';
+                nextBtn.innerHTML = '<i class="fas fa-arrow-right"></i> 下一步';
+                nextBtn.onclick = showNextStep;
+                currentStep = 0;
+            }
+        }
+        
+        // 设置三个例题的解答控制
+        setupExampleControls('example1', 'showEx1', 'nextEx1', 'ex1', 5);
+        setupExampleControls('example2', 'showEx2', 'nextEx2', 'ex2', 5);
+        setupExampleControls('example3', 'showEx3', 'nextEx3', 'ex3', 5);
+    </script>
+</body>
+</html>
