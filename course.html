@@ -590,6 +590,223 @@
             transform: scale(1.05);
         }
         
+        /* 新增样式 */
+        .real-life-examples {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        .example-item {
+            flex: 1;
+            min-width: 300px;
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            border-top: 5px solid #ff9800;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .example-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .example-item h3 {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            color: #e65100;
+        }
+        
+        .example-icon {
+            background: #ffecb3;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            color: #e65100;
+        }
+        
+        .example-equation {
+            background: #fff8e1;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            font-weight: bold;
+            text-align: center;
+            font-size: 1.3rem;
+            border-left: 4px solid #ffb300;
+        }
+        
+        .pyramid {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 30px 0;
+        }
+        
+        .pyramid-level {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            margin: 10px 0;
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        .pyramid-item {
+            background: #0288d1;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            text-align: center;
+            min-width: 150px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .pyramid-item i {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .pyramid-arrow {
+            font-size: 2rem;
+            color: #0288d1;
+            margin: 5px 0;
+            animation: bounce 1s infinite alternate;
+        }
+        
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(10px); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* 优化思维导图样式 */
+        .mind-map-container {
+            display: flex;
+            justify-content: center;
+            margin: 40px 0;
+        }
+        
+        .mind-map {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 800px;
+            position: relative;
+        }
+        
+        .mind-map-row {
+            display: flex;
+            justify-content: center;
+            position: relative;
+            min-height: 120px;
+        }
+        
+        .mind-map-node {
+            width: 140px;
+            height: 110px;
+            background: white;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border: 3px solid #0288d1;
+            z-index: 1;
+            position: relative;
+            margin: 0 15px;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.5s ease;
+        }
+        
+        .mind-map-node.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+        
+        .mind-map-node i {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: #0288d1;
+        }
+        
+        .mind-map-connector {
+            position: absolute;
+            background: #0288d1;
+            z-index: 0;
+            opacity: 0;
+            transition: all 0.5s ease;
+        }
+        
+        .mind-map-connector.show {
+            opacity: 0.6;
+        }
+        
+        .mind-map-row-1 .mind-map-node {
+            background: #e1f5fe;
+            border-color: #0288d1;
+        }
+        
+        .mind-map-row-2 .mind-map-node {
+            background: #fff9c4;
+            border-color: #ffb300;
+        }
+        
+        .mind-map-row-3 .mind-map-node {
+            background: #e8f5e9;
+            border-color: #4caf50;
+        }
+        
+        .control-center {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        
+        .animate-btn {
+            padding: 12px 25px;
+            background: #ff9800;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .animate-btn:hover {
+            background: #f57c00;
+            transform: scale(1.05);
+        }
+        
         @media (max-width: 768px) {
             .rule-cards, .options {
                 grid-template-columns: 1fr;
@@ -611,6 +828,29 @@
                 flex-direction: column;
                 align-items: center;
             }
+            
+            .mind-map-node {
+                width: 120px;
+                height: 100px;
+                font-size: 0.9rem;
+            }
+            
+            .mind-map-row {
+                min-height: 100px;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .mind-map-node {
+                width: 100px;
+                height: 90px;
+                font-size: 0.8rem;
+                margin: 0 8px;
+            }
+            
+            .mind-map-node i {
+                font-size: 1.5rem;
+            }
         }
     </style>
 </head>
@@ -627,8 +867,50 @@
         
         <header>
             <h1><i class="fas fa-calculator"></i> 混合运算</h1>
-            <p class="subtitle">小学三年级数学上册 - 掌握混合运算的规则与方法</p>
+            <p class="subtitle">小学三年级数学上册 - 从生活中学混合运算</p>
         </header>
+        
+        <!-- 新增：生活实例部分 -->
+        <section class="section">
+            <h2><i class="fas fa-shopping-cart"></i> 生活中的混合运算</h2>
+            <p style="margin-bottom: 20px; font-size: 1.2rem; line-height: 1.6;">
+                混合运算不是只存在于课本中！在我们的日常生活中，经常会遇到需要同时使用加法、减法、乘法、除法的情况。让我们看看这些例子：
+            </p>
+            
+            <div class="real-life-examples">
+                <div class="example-item">
+                    <h3>
+                        <div class="example-icon"><i class="fas fa-shopping-bag"></i></div>
+                        购物计算
+                    </h3>
+                    <p>小明买了3本笔记本，每本8元，又买了2支笔，每支5元。他付给售货员50元，应该找回多少钱？</p>
+                    <div class="example-equation">50 - (3×8 + 2×5) = ?</div>
+                </div>
+                
+                <div class="example-item">
+                    <h3>
+                        <div class="example-icon"><i class="fas fa-cookie"></i></div>
+                        零食分配
+                    </h3>
+                    <p>老师有36块饼干，分给6个小组，每个小组有4个同学。每个同学能分到几块饼干？</p>
+                    <div class="example-equation">36 ÷ (6×4) = ?</div>
+                </div>
+                
+                <div class="example-item">
+                    <h3>
+                        <div class="example-icon"><i class="fas fa-bus"></i></div>
+                        乘车问题
+                    </h3>
+                    <p>一辆公交车上有35名乘客，第一站下车10人，上车8人；第二站下车5人，上车12人。现在车上有多少人？</p>
+                    <div class="example-equation">35 - 10 + 8 - 5 + 12 = ?</div>
+                </div>
+            </div>
+            
+            <div class="example-section">
+                <h3><i class="fas fa-lightbulb"></i> 为什么需要混合运算？</h3>
+                <p>生活中遇到的问题往往需要多个步骤才能解决，就像上面的例子一样。混合运算就是在一个算式中包含两种或两种以上的运算（加、减、乘、除），帮助我们更高效地解决复杂问题。</p>
+            </div>
+        </section>
         
         <section class="section learning-goals">
             <h2><i class="fas fa-bullseye"></i> 学习目标</h2>
@@ -643,6 +925,39 @@
         
         <section class="section">
             <h2><i class="fas fa-ruler-combined"></i> 混合运算规则</h2>
+            
+            <!-- 新增：运算顺序金字塔 -->
+            <div class="pyramid">
+                <h3 style="text-align: center; margin-bottom: 20px; color: #0277bd;">
+                    <i class="fas fa-sort-amount-down-alt"></i> 运算顺序金字塔
+                </h3>
+                
+                <div class="pyramid-level" style="animation-delay: 0.2s;">
+                    <div class="pyramid-item" style="background: #d32f2f;">
+                        <i class="fas fa-brackets-curly"></i>
+                        括号
+                    </div>
+                </div>
+                
+                <div class="pyramid-arrow">↓</div>
+                
+                <div class="pyramid-level" style="animation-delay: 0.6s;">
+                    <div class="pyramid-item" style="background: #f57c00;">
+                        <i class="fas fa-times"></i>
+                        乘除
+                    </div>
+                </div>
+                
+                <div class="pyramid-arrow">↓</div>
+                
+                <div class="pyramid-level" style="animation-delay: 1.0s;">
+                    <div class="pyramid-item" style="background: #0288d1;">
+                        <i class="fas fa-plus"></i>
+                        加减
+                    </div>
+                </div>
+            </div>
+            
             <div class="rule-cards">
                 <div class="rule-card">
                     <h3><span class="number">1</span> 先乘除后加减</h3>
@@ -666,6 +981,66 @@
             <div class="example-section">
                 <h3><i class="fas fa-lightbulb"></i> 重要提示</h3>
                 <p>混合运算就像我们生活中的规则：先做重要的事情（乘除），再做次要的事情（加减）。括号就像老师说"这个先做"，所以我们要特别关注括号里的运算。</p>
+            </div>
+        </section>
+        
+        <!-- 优化后的思维导图 -->
+        <section class="section">
+            <h2><i class="fas fa-brain"></i> 解题思维导图</h2>
+            <p style="margin-bottom: 20px; text-align: center; font-size: 1.2rem;">
+                解决混合运算问题需要清晰的思路，让我们看看如何一步步思考：
+            </p>
+            
+            <div class="mind-map-container">
+                <div class="mind-map">
+                    <!-- 第一行 -->
+                    <div class="mind-map-row mind-map-row-1">
+                        <div class="mind-map-node" id="node1">
+                            <i class="fas fa-search"></i>
+                            读题理解
+                        </div>
+                    </div>
+                    
+                    <div class="mind-map-connector" id="connector1" style="height: 50px; width: 3px; top: 110px; left: 50%; transform: translateX(-50%);"></div>
+                    
+                    <!-- 第二行 -->
+                    <div class="mind-map-row mind-map-row-2">
+                        <div class="mind-map-node" id="node2">
+                            <i class="fas fa-brackets-curly"></i>
+                            找括号
+                        </div>
+                    </div>
+                    
+                    <div class="mind-map-connector" id="connector2" style="height: 50px; width: 3px; top: 280px; left: 50%; transform: translateX(-50%);"></div>
+                    
+                    <!-- 第三行 -->
+                    <div class="mind-map-row mind-map-row-3">
+                        <div class="mind-map-node" id="node3">
+                            <i class="fas fa-times"></i>
+                            算乘除
+                        </div>
+                        <div class="mind-map-node" id="node4">
+                            <i class="fas fa-plus"></i>
+                            算加减
+                        </div>
+                    </div>
+                    
+                    <div class="mind-map-connector" id="connector3" style="height: 50px; width: 3px; top: 450px; left: 50%; transform: translateX(-50%);"></div>
+                    
+                    <!-- 第四行 -->
+                    <div class="mind-map-row mind-map-row-1">
+                        <div class="mind-map-node" id="node5">
+                            <i class="fas fa-check-circle"></i>
+                            检查结果
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="control-center">
+                <button class="animate-btn" id="animateMap">
+                    <i class="fas fa-play"></i> 显示解题思路
+                </button>
             </div>
         </section>
         
@@ -990,6 +1365,72 @@
         setupExampleControls('example1', 'showEx1', 'nextEx1', 'ex1', 5);
         setupExampleControls('example2', 'showEx2', 'nextEx2', 'ex2', 5);
         setupExampleControls('example3', 'showEx3', 'nextEx3', 'ex3', 5);
+        
+        // 思维导图动画
+        const animateBtn = document.getElementById('animateMap');
+        const nodes = [
+            document.getElementById('node1'),
+            document.getElementById('node2'),
+            document.getElementById('node3'),
+            document.getElementById('node4'),
+            document.getElementById('node5')
+        ];
+        
+        const connectors = [
+            document.getElementById('connector1'),
+            document.getElementById('connector2'),
+            document.getElementById('connector3')
+        ];
+        
+        animateBtn.addEventListener('click', () => {
+            // 重置所有节点
+            nodes.forEach(node => {
+                node.classList.remove('show');
+            });
+            
+            connectors.forEach(connector => {
+                connector.classList.remove('show');
+            });
+            
+            // 依次显示节点和连线
+            let delay = 0;
+            
+            // 显示节点1
+            setTimeout(() => {
+                nodes[0].classList.add('show');
+            }, delay += 300);
+            
+            // 显示连线1
+            setTimeout(() => {
+                connectors[0].classList.add('show');
+            }, delay += 300);
+            
+            // 显示节点2
+            setTimeout(() => {
+                nodes[1].classList.add('show');
+            }, delay += 300);
+            
+            // 显示连线2
+            setTimeout(() => {
+                connectors[1].classList.add('show');
+            }, delay += 300);
+            
+            // 显示节点3和4
+            setTimeout(() => {
+                nodes[2].classList.add('show');
+                nodes[3].classList.add('show');
+            }, delay += 300);
+            
+            // 显示连线3
+            setTimeout(() => {
+                connectors[2].classList.add('show');
+            }, delay += 300);
+            
+            // 显示节点5
+            setTimeout(() => {
+                nodes[4].classList.add('show');
+            }, delay += 300);
+        });
     </script>
 </body>
 </html>
