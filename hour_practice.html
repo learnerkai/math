@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>三年级数学专项练习</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #e0f7fa, #bbdefb);
+            color: #2c3e50;
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            background: rgba(255, 255, 255, 0.97);
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            position: relative;
+            padding: 30px;
+        }
+        
+        .floating-icons {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .floating-icon {
+            position: absolute;
+            font-size: 2.5rem;
+            opacity: 0.1;
+            color: #0288d1;
+            animation: float 15s infinite linear;
+        }
+        
+        @keyframes float {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(20px, 15px) rotate(10deg); }
+            50% { transform: translate(0, 30px) rotate(0deg); }
+            75% { transform: translate(-20px, 15px) rotate(-10deg); }
+            100% { transform: translate(0, 0) rotate(0deg); }
+        }
+        
+        header {
+            text-align: center;
+            padding: 25px;
+            background: linear-gradient(90deg, #42a5f5, #0288d1);
+            color: white;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .tab-btn {
+            padding: 12px 25px;
+            background: #e1f5fe;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .tab-btn:hover {
+            background: #bbdefb;
+            transform: translateY(-3px);
+        }
+        
+        .tab-btn.active {
+            background: #0288d1;
+            color: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .content-section {
+            background: #f8fbff;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e1f5fe;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .section-title {
+            color: #0277bd;
+            margin-bottom: 25px;
+            padding-bottom: 12px;
+            border-bottom: 3px solid #4fc3f7;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .section-title i {
+            background: #e1f5fe;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        
+        .problems-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .problem-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border-left: 4px solid #42a5f5;
+            position: relative;
+        }
+        
+        .problem-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .problem-card h3 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            color: #01579b;
+        }
+        
+        .problem-card .number {
+            background: #0288d1;
+            color: white;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-weight: bold;
+        }
+        
+        .problem-text {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .answer-input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e1f5fe;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        
+        .answer-input:focus {
+            border-color: #42a5f5;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(66, 165, 245, 0.3);
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .control-btn {
+            padding: 15px 30px;
+            background: linear-gradient(90deg, #42a5f5, #0288d1);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .control-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .control-btn.check {
+            background: linear-gradient(90deg, #66bb6a, #388e3c);
+        }
+        
+        .control-btn.reset {
+            background: linear-gradient(90deg, #ff9800, #f57c00);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #546e7a;
+            font-size: 1.1rem;
+            margin-top: 30px;
+        }
+        
+        .result-message {
+            text-align: center;
+            padding: 20px;
+            margin-top: 20px;
+            font-size: 1.2rem;
+            border-radius: 15px;
+            display: none;
+        }
+        
+        .correct {
+            background: #e8f5e9;
+            color: #388e3c;
+            border: 2px solid #a5d6a7;
+        }
+        
+        .incorrect {
+            background: #ffebee;
+            color: #d32f2f;
+            border: 2px solid #ffcdd2;
+        }
+        
+        .solution {
+            background: #e3f2fd;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
+            font-size: 0.95rem;
+            display: none;
+        }
+        
+        .solution-title {
+            font-weight: bold;
+            color: #0288d1;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .toggle-solution {
+            background: #bbdefb;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .toggle-solution:hover {
+            background: #90caf9;
+        }
+        
+        .answer-section {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .show-answer-btn {
+            background: #4fc3f7;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        
+        .show-answer-btn:hover {
+            background: #29b6f6;
+            transform: translateY(-2px);
+        }
+        
+        .correct-answer {
+            font-weight: bold;
+            color: #388e3c;
+            font-size: 1.2rem;
+            padding: 10px;
+            background: #e8f5e9;
+            border-radius: 8px;
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .problems-container {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .container {
+                padding: 15px;
+            }
+            
+            .tabs {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .controls {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+        
+        .answer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+        
+        .score-badge {
+            background: #ff9800;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .difficulty-tag {
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .basic-tag {
+            background: #c8e6c9;
+            color: #2e7d32;
+        }
+        
+        .advanced-tag {
+            background: #ffecb3;
+            color: #f57f17;
+        }
+        
+        .inner-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .inner-tab-btn {
+            padding: 8px 15px;
+            background: #e1f5fe;
+            border: none;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .inner-tab-btn.active {
+            background: #0288d1;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="floating-icons">
+            <div class="floating-icon" style="top:10%; left:5%;">+</div>
+            <div class="floating-icon" style="top:25%; right:7%;">-</div>
+            <div class="floating-icon" style="bottom:15%; left:8%;">⏱</div>
+            <div class="floating-icon" style="bottom:30%; right:10%;">÷</div>
+            <div class="floating-icon" style="top:40%; left:20%;">=</div>
+            <div class="floating-icon" style="top:60%; right:25%;">( )</div>
+        </div>
+        
+        <header>
+            <h1><i class="fas fa-calculator"></i> 数学练习系统</h1>
+            <p class="subtitle">小学三年级数学 - 万以内加减法与时、分、秒应用题</p>
+        </header>
+        
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="arithmetic">
+                <i class="fas fa-plus-minus"></i> 万以内加减法
+            </button>
+            <button class="tab-btn" data-tab="application">
+                <i class="fas fa-clock"></i> 时分秒应用题
+            </button>
+        </div>
+        
+        <div class="content-section" id="arithmetic-section">
+            <h2 class="section-title">
+                <i class="fas fa-plus-minus"></i> 万以内加减法练习题
+                <span class="score-badge">每题2分</span>
+            </h2>
+            <div class="problems-container" id="arithmetic-problems">
+                <!-- 万以内加减法题将通过JS动态生成 -->
+            </div>
+        </div>
+        
+        <div class="content-section" id="application-section" style="display: none;">
+            <h2 class="section-title">
+                <i class="fas fa-clock"></i> 时分秒应用题
+                <span class="score-badge">每题5分</span>
+            </h2>
+            
+            <div class="inner-tabs">
+                <button class="inner-tab-btn active" data-inner-tab="basic">基础题</button>
+                <button class="inner-tab-btn" data-inner-tab="advanced">提升题</button>
+            </div>
+            
+            <div id="basic-time-problems" class="problems-container">
+                <!-- 基础应用题将通过JS动态生成 -->
+            </div>
+            
+            <div id="advanced-time-problems" class="problems-container" style="display: none;">
+                <!-- 提升应用题将通过JS动态生成 -->
+            </div>
+        </div>
+        
+        <div class="controls">
+            <button class="control-btn check" id="check-btn">
+                <i class="fas fa-check-circle"></i> 检查答案
+            </button>
+            <button class="control-btn reset" id="reset-btn">
+                <i class="fas fa-redo"></i> 重新开始
+            </button>
+        </div>
+        
+        <div class="result-message" id="result-message"></div>
+        
+        <footer>
+            <p>小学三年级数学专项练习题</p>
+            <p>勤练习，多思考，数学其实很有趣！</p>
+        </footer>
+    </div>
+
+    <script>
+        // 万以内加减法题数据（50题）
+        const arithmeticProblems = [
+            // 百位数与百位数加减法
+            { problem: "345 + 278 = ?", answer: "623", solution: "345 + 278 = 623<br>计算过程：个位5+8=13，写3进1；十位4+7+1=12，写2进1；百位3+2+1=6" },
+            { problem: "789 - 456 = ?", answer: "333", solution: "789 - 456 = 333<br>计算过程：个位9-6=3；十位8-5=3；百位7-4=3" },
+            { problem: "456 + 789 = ?", answer: "1245", solution: "456 + 789 = 1245<br>计算过程：个位6+9=15，写5进1；十位5+8+1=14，写4进1；百位4+7+1=12，写2进1；千位1" },
+            { problem: "1000 - 345 = ?", answer: "655", solution: "1000 - 345 = 655<br>计算过程：个位0-5不够，向十位借1，10-5=5；十位0-4不够，向百位借1，10-4=6（但借过1后为9）；百位0-3不够，向千位借1，10-3=7（借位后为9）；千位1-1=0" },
+            { problem: "567 + 432 = ?", answer: "999", solution: "567 + 432 = 999<br>计算过程：个位7+2=9；十位6+3=9；百位5+4=9" },
+            
+            // 百位数与千位数加减法
+            { problem: "1234 + 567 = ?", answer: "1801", solution: "1234 + 567 = 1801<br>计算过程：个位4+7=11，写1进1；十位3+6+1=10，写0进1；百位2+5+1=8；千位1" },
+            { problem: "2000 - 345 = ?", answer: "1655", solution: "2000 - 345 = 1655<br>计算过程：个位0-5不够，借位10-5=5；十位0-4不够，借位10-4=6（借位后为9）；百位0-3不够，借位10-3=7（借位后为9）；千位2-1=1" },
+            { problem: "456 + 1234 = ?", answer: "1690", solution: "456 + 1234 = 1690<br>计算过程：个位6+4=10，写0进1；十位5+3+1=9；百位4+2=6；千位1" },
+            { problem: "3000 - 789 = ?", answer: "2211", solution: "3000 - 789 = 2211<br>计算过程：个位0-9不够，借位10-9=1；十位0-8不够，借位10-8=2（借位后为9）；百位0-7不够，借位10-7=3（借位后为9）；千位3-1=2" },
+            { problem: "678 + 4321 = ?", answer: "4999", solution: "678 + 4321 = 4999<br>计算过程：个位8+1=9；十位7+2=9；百位6+3=9；千位4" },
+            
+            // 千位数与千位数加减法
+            { problem: "3456 + 2789 = ?", answer: "6245", solution: "3456 + 2789 = 6245<br>计算过程：个位6+9=15，写5进1；十位5+8+1=14，写4进1；百位4+7+1=12，写2进1；千位3+2+1=6" },
+            { problem: "7200 - 4583 = ?", answer: "2617", solution: "7200 - 4583 = 2617<br>计算过程：个位0-3不够，向十位借1，10-3=7；十位0-8不够，向百位借1，10-8=2（借位后为9）；百位2-5不够，向千位借1，12-5=7；千位7-1-4=2" },
+            { problem: "8432 + 1568 = ?", answer: "10000", solution: "8432 + 1568 = 10000<br>计算过程：个位2+8=10，写0进1；十位3+6+1=10，写0进1；百位4+5+1=10，写0进1；千位8+1+1=10，写0进1；万位1" },
+            { problem: "10000 - 6789 = ?", answer: "3211", solution: "10000 - 6789 = 3211<br>计算过程：个位0-9不够，借位10-9=1；十位0-8不够，借位10-8=2（借位后为9）；百位0-7不够，借位10-7=3（借位后为9）；千位0-6不够，借位10-6=4（借位后为9）；万位1-1=0" },
+            { problem: "5678 + 4321 = ?", answer: "9999", solution: "5678 + 4321 = 9999<br>计算过程：个位8+1=9；十位7+2=9；百位6+3=9；千位5+4=9" },
+            
+            // 更多题目...
+            { problem: "9245 - 3876 = ?", answer: "5369", solution: "9245 - 3876 = 5369<br>计算过程：个位5-6不够，借位15-6=9；十位4-7不够，借位14-7=7（借位后为3）；百位2-8不够，借位12-8=4（借位后为1）；千位9-1-3=5" },
+            { problem: "4823 + 5197 = ?", answer: "10020", solution: "4823 + 5197 = 10020<br>计算过程：个位3+7=10，写0进1；十位2+9+1=12，写2进1；百位8+1+1=10，写0进1；千位4+5+1=10，写0进1；万位1" },
+            { problem: "7539 - 2684 = ?", answer: "4855", solution: "7539 - 2684 = 4855<br>计算过程：个位9-4=5；十位3-8不够，借位13-8=5；百位5-6不够，借位15-6=9（借位后为4）；千位7-1-2=4" },
+            { problem: "6194 + 2806 = ?", answer: "9000", solution: "6194 + 2806 = 9000<br>计算过程：个位4+6=10，写0进1；十位9+0+1=10，写0进1；百位1+8+1=10，写0进1；千位6+2+1=9" },
+            { problem: "10000 - 1234 = ?", answer: "8766", solution: "10000 - 1234 = 8766<br>计算过程：个位0-4不够，借位10-4=6；十位0-3不够，借位10-3=7（借位后为9）；百位0-2不够，借位10-2=8（借位后为9）；千位0-1不够，借位10-1=9（借位后为9）；万位1-1=0" },
+            
+            { problem: "4567 + 5433 = ?", answer: "10000", solution: "4567 + 5433 = 10000<br>计算过程：个位7+3=10，写0进1；十位6+3+1=10，写0进1；百位5+4+1=10，写0进1；千位4+5+1=10，写0进1；万位1" },
+            { problem: "7890 - 2345 = ?", answer: "5545", solution: "7890 - 2345 = 5545<br>计算过程：个位0-5不够，借位10-5=5；十位9-4=5（借位后为8）；百位8-3=5（借位后为7）；千位7-2=5" },
+            { problem: "3256 + 6744 = ?", answer: "10000", solution: "3256 + 6744 = 10000<br>计算过程：个位6+4=10，写0进1；十位5+4+1=10，写0进1；百位2+7+1=10，写0进1；千位3+6+1=10，写0进1；万位1" },
+            { problem: "8621 - 4397 = ?", answer: "4224", solution: "8621 - 4397 = 4224<br>计算过程：个位1-7不够，借位11-7=4；十位2-9不够，借位12-9=3（借位后为1）；百位6-3=3（借位后为5）；千位8-4=4" },
+            { problem: "5000 - 1234 = ?", answer: "3766", solution: "5000 - 1234 = 3766<br>计算过程：个位0-4不够，借位10-4=6；十位0-3不够，借位10-3=7（借位后为9）；百位0-2不够，借位10-2=8（借位后为9）；千位5-1=4" },
+            
+            { problem: "2345 + 7655 = ?", answer: "10000", solution: "2345 + 7655 = 10000<br>计算过程：个位5+5=10，写0进1；十位4+5+1=10，写0进1；百位3+6+1=10，写0进1；千位2+7+1=10，写0进1；万位1" },
+            { problem: "9999 - 5678 = ?", answer: "4321", solution: "9999 - 5678 = 4321<br>计算过程：个位9-8=1；十位9-7=2；百位9-6=3；千位9-5=4" },
+            { problem: "6789 + 3211 = ?", answer: "10000", solution: "6789 + 3211 = 10000<br>计算过程：个位9+1=10，写0进1；十位8+1+1=10，写0进1；百位7+2+1=10，写0进1；千位6+3+1=10，写0进1；万位1" },
+            { problem: "8542 - 3698 = ?", answer: "4844", solution: "8542 - 3698 = 4844<br>计算过程：个位2-8不够，借位12-8=4；十位4-9不够，借位14-9=5（借位后为3）；百位5-6不够，借位15-6=9（借位后为4）；千位8-3=5" },
+            { problem: "10000 - 4321 = ?", answer: "5679", solution: "10000 - 4321 = 5679<br>计算过程：个位0-1不够，借位10-1=9；十位0-2不够，借位10-2=8（借位后为9）；百位0-3不够，借位10-3=7（借位后为9）；千位0-4不够，借位10-4=6（借位后为9）；万位1-1=0" },
+            
+            { problem: "6237 + 1843 = ?", answer: "8080", solution: "6237 + 1843 = 8080<br>计算过程：个位7+3=10，写0进1；十位3+4+1=8；百位2+8=10，写0进1；千位6+1+1=8" },
+            { problem: "7200 - 3456 = ?", answer: "3744", solution: "7200 - 3456 = 3744<br>计算过程：个位0-6不够，借位10-6=4；十位0-5不够，借位10-5=5（借位后为9）；百位2-4不够，借位12-4=8（借位后为1）；千位7-3=4" },
+            { problem: "5678 + 4322 = ?", answer: "10000", solution: "5678 + 4322 = 10000<br>计算过程：个位8+2=10，写0进1；十位7+2+1=10，写0进1；百位6+3+1=10，写0进1；千位5+4+1=10，写0进1；万位1" },
+            { problem: "10000 - 8765 = ?", answer: "1235", solution: "10000 - 8765 = 1235<br>计算过程：个位0-5不够，借位10-5=5；十位0-6不够，借位10-6=4（借位后为9）；百位0-7不够，借位10-7=3（借位后为9）；千位0-8不够，借位10-8=2（借位后为9）；万位1-1=0" },
+            { problem: "4321 + 5679 = ?", answer: "10000", solution: "4321 + 5679 = 10000<br>计算过程：个位1+9=10，写0进1；十位2+7+1=10，写0进1；百位3+6+1=10，写0进1；千位4+5+1=10，写0进1；万位1" },
+            
+            { problem: "8888 - 4444 = ?", answer: "4444", solution: "8888 - 4444 = 4444<br>计算过程：个位8-4=4；十位8-4=4；百位8-4=4；千位8-4=4" },
+            { problem: "1234 + 8766 = ?", answer: "10000", solution: "1234 + 8766 = 10000<br>计算过程：个位4+6=10，写0进1；十位3+6+1=10，写0进1；百位2+7+1=10，写0进1；千位1+8+1=10，写0进1；万位1" },
+            { problem: "9999 - 1234 = ?", answer: "8765", solution: "9999 - 1234 = 8765<br>计算过程：个位9-4=5；十位9-3=6；百位9-2=7；千位9-1=8" },
+            { problem: "2468 + 7532 = ?", answer: "10000", solution: "2468 + 7532 = 10000<br>计算过程：个位8+2=10，写0进1；十位6+3+1=10，写0进1；百位4+5+1=10，写0进1；千位2+7+1=10，写0进1；万位1" },
+            { problem: "5000 - 2345 = ?", answer: "2655", solution: "5000 - 2345 = 2655<br>计算过程：个位0-5不够，借位10-5=5；十位0-4不够，借位10-4=6（借位后为9）；百位0-3不够，借位10-3=7（借位后为9）；千位5-2=3" },
+            
+            { problem: "6789 + 3210 = ?", answer: "9999", solution: "6789 + 3210 = 9999<br>计算过程：个位9+0=9；十位8+1=9；百位7+2=9；千位6+3=9" },
+            { problem: "10000 - 5555 = ?", answer: "4445", solution: "10000 - 5555 = 4445<br>计算过程：个位0-5不够，借位10-5=5；十位0-5不够，借位10-5=5（借位后为9）；百位0-5不够，借位10-5=5（借位后为9）；千位0-5不够，借位10-5=5（借位后为9）；万位1-1=0" },
+            { problem: "3333 + 6667 = ?", answer: "10000", solution: "3333 + 6667 = 10000<br>计算过程：个位3+7=10，写0进1；十位3+6+1=10，写0进1；百位3+6+1=10，写0进1；千位3+6+1=10，写0进1；万位1" },
+            { problem: "7777 - 3333 = ?", answer: "4444", solution: "7777 - 3333 = 4444<br>计算过程：个位7-3=4；十位7-3=4；百位7-3=4；千位7-3=4" },
+            { problem: "1234 + 5678 = ?", answer: "6912", solution: "1234 + 5678 = 6912<br>计算过程：个位4+8=12，写2进1；十位3+7+1=11，写1进1；百位2+6+1=9；千位1+5=6" },
+            
+            { problem: "9000 - 1234 = ?", answer: "7766", solution: "9000 - 1234 = 7766<br>计算过程：个位0-4不够，借位10-4=6；十位0-3不够，借位10-3=7（借位后为9）；百位0-2不够，借位10-2=8（借位后为9）；千位9-1=8" },
+            { problem: "4567 + 5432 = ?", answer: "9999", solution: "4567 + 5432 = 9999<br>计算过程：个位7+2=9；十位6+3=9；百位5+4=9；千位4+5=9" },
+            { problem: "10000 - 9999 = ?", answer: "1", solution: "10000 - 9999 = 1<br>计算过程：个位0-9不够，借位10-9=1；十位0-9不够，借位10-9=1（借位后为9）；百位0-9不够，借位10-9=1（借位后为9）；千位0-9不够，借位10-9=1（借位后为9）；万位1-1=0" },
+            { problem: "2345 + 7655 = ?", answer: "10000", solution: "2345 + 7655 = 10000<br>计算过程：个位5+5=10，写0进1；十位4+5+1=10，写0进1；百位3+6+1=10，写0进1；千位2+7+1=10，写0进1；万位1" },
+            { problem: "8888 - 1234 = ?", answer: "7654", solution: "8888 - 1234 = 7654<br>计算过程：个位8-4=4；十位8-3=5；百位8-2=6；千位8-1=7" }
+        ];
+        
+        // 时分秒应用题数据（20题基础题）
+        const basicTimeProblems = [
+            { problem: "小明早上7:15起床，花了25分钟洗漱和吃早餐，他几点出门上学？", answer: "7:40", solution: "7:15 + 25分钟 = 7:40<br>计算过程：15分钟 + 25分钟 = 40分钟，小时不变" },
+            { problem: "学校8:00开始上课，小红从家到学校需要20分钟，她最晚几点出门？", answer: "7:40", solution: "8:00 - 20分钟 = 7:40<br>计算过程：00分钟 - 20分钟不够，向小时借1小时（60分钟），60-20=40，小时变为7" },
+            { problem: "一节课40分钟，课间休息10分钟。从8:00开始第一节课，第三节课几点开始？", answer: "9:40", solution: "第一节课8:00-8:40<br>休息8:40-8:50<br>第二节课8:50-9:30<br>休息9:30-9:40<br>第三节课9:40开始" },
+            { problem: "动画片从下午4:30开始，到5:15结束，一共播放了多长时间？", answer: "45分钟", solution: "5:15 - 4:30 = 45分钟<br>计算过程：分钟15-30不够减，向小时借1小时(60分钟)，60+15-30=45分钟" },
+            { problem: "妈妈做饭用了1小时20分钟，她5:10开始做饭，几点做完？", answer: "6:30", solution: "5:10 + 1小时 = 6:10<br>6:10 + 20分钟 = 6:30" },
+            { problem: "火车10:45出发，小明需要提前30分钟到车站，他应该几点到达？", answer: "10:15", solution: "10:45 - 30分钟 = 10:15" },
+            { problem: "小华写作业用了50分钟，从7:05开始写，几点结束？", answer: "7:55", solution: "7:05 + 50分钟 = 7:55<br>5分钟 + 50分钟 = 55分钟，小时不变" },
+            { problem: "一场足球比赛分上下半场，各45分钟，中场休息15分钟。如果比赛从14:00开始，几点结束？", answer: "15:45", solution: "上半场14:00-14:45<br>中场休息14:45-15:00<br>下半场15:00-15:45" },
+            { problem: "汽车从A城到B城需要2小时15分钟，如果9:20出发，几点到达？", answer: "11:35", solution: "9:20 + 2小时 = 11:20<br>11:20 + 15分钟 = 11:35" },
+            { problem: "小明晚上9:30睡觉，睡了9小时，他几点起床？", answer: "6:30", solution: "晚上9:30 + 9小时 = 第二天早上6:30" },
+            { problem: "电影开始时间是19:45，时长1小时50分钟，几点结束？", answer: "21:35", solution: "19:45 + 1小时 = 20:45<br>20:45 + 50分钟 = 21:35" },
+            { problem: "小刚从家到学校步行需要25分钟，他7:50到校，最晚几点出发？", answer: "7:25", solution: "7:50 - 25分钟 = 7:25" },
+            { problem: "一节数学课35分钟，从10:15开始，几点结束？", answer: "10:50", solution: "10:15 + 35分钟 = 10:50" },
+            { problem: "妈妈上班从8:30到17:00，她工作多长时间？", answer: "8小时30分钟", solution: "17:00 - 8:30 = 8小时30分钟<br>计算：17时-8时=9小时，但分钟00-30不够减，所以借1小时(60分钟)，60-30=30分钟，小时变为8小时" },
+            { problem: "小明做作业从15:20到16:45，用了多长时间？", answer: "1小时25分钟", solution: "16:45 - 15:20 = 1小时25分钟<br>分钟45-20=25分钟，小时16-15=1小时" },
+            { problem: "学校运动会9:00开始，11:30结束，持续多长时间？", answer: "2小时30分钟", solution: "11:30 - 9:00 = 2小时30分钟" },
+            { problem: "火车从A站到B站需要3小时40分钟，如果8:15发车，几点到达？", answer: "11:55", solution: "8:15 + 3小时 = 11:15<br>11:15 + 40分钟 = 11:55" },
+            { problem: "小华每天练习钢琴45分钟，她从18:30开始，几点结束？", answer: "19:15", solution: "18:30 + 45分钟 = 19:15" },
+            { problem: "一场音乐会19:30开始，21:15结束，中间休息了15分钟，实际演出时间多长？", answer: "1小时30分钟", solution: "总时长：21:15 - 19:30 = 1小时45分钟<br>减去休息：1小时45分钟 - 15分钟 = 1小时30分钟" },
+            { problem: "小明6:50起床，7:30出门，他用了多长时间准备？", answer: "40分钟", solution: "7:30 - 6:50 = 40分钟<br>计算：分钟30-50不够减，借1小时(60分钟)，60+30-50=40分钟" }
+        ];
+        
+        // 时分秒应用题数据（20题提升题）
+        const advancedTimeProblems = [
+            { problem: "小明从家到学校步行需要25分钟，骑自行车比步行快10分钟。他今天骑自行车7:45出发，几点到校？", answer: "8:00", solution: "骑自行车时间：25分钟 - 10分钟 = 15分钟<br>7:45 + 15分钟 = 8:00" },
+            { problem: "一列火车从甲站开往乙站需要3小时50分钟。如果10:15出发，下午几点到达？", answer: "14:05", solution: "10:15 + 3小时 = 13:15<br>13:15 + 50分钟 = 14:05" },
+            { problem: "学校组织看电影，电影时长1小时45分钟，结束后还要20分钟回学校。如果8:30出发，10:50能回到学校吗？", answer: "能", solution: "电影时间：1小时45分钟<br>回校时间：20分钟<br>总时间：1小时45分钟 + 20分钟 = 2小时5分钟<br>8:30 + 2小时5分钟 = 10:35<br>10:35早于10:50，所以能回到学校" },
+            { problem: "小华做实验，第一次用了45分钟，第二次比第一次少用15分钟，第三次用了1小时10分钟。三次实验总共用了多长时间？", answer: "2小时25分钟", solution: "第一次：45分钟<br>第二次：45 - 15 = 30分钟<br>第三次：1小时10分钟 = 70分钟<br>总计：45+30+70=145分钟 = 2小时25分钟" },
+            { problem: "从A地到B地，汽车需要1小时40分钟，火车比汽车快25分钟。坐火车需要多长时间？", answer: "1小时15分钟", solution: "1小时40分钟 = 100分钟<br>火车时间：100 - 25 = 75分钟 = 1小时15分钟" },
+            { problem: "妈妈做蛋糕需要50分钟，烤饼干需要1小时10分钟。如果她先做蛋糕再做饼干，从9:20开始，几点结束？", answer: "11:20", solution: "蛋糕：50分钟，9:20开始，10:10结束<br>饼干：1小时10分钟 = 70分钟，10:10开始，11:20结束" },
+            { problem: "火车准点到达是14:20，晚点了45分钟，实际几点到达？", answer: "15:05", solution: "14:20 + 45分钟 = 15:05" },
+            { problem: "小明参加考试，考试时间90分钟。他8:45开始答题，10:00结束。他提前多少分钟完成？", answer: "15分钟", solution: "8:45 + 90分钟 = 8:45 + 1小时30分钟 = 10:15<br>实际10:00结束，提前10:15 - 10:00 = 15分钟" },
+            { problem: "一场篮球比赛分四节，每节12分钟，节间休息2分钟，半场休息15分钟。如果比赛从14:00开始，几点结束？", answer: "15:45", solution: "四节比赛时间：4 × 12 = 48分钟<br>节间休息：3 × 2 = 6分钟<br>半场休息：15分钟<br>总时间：48 + 6 + 15 = 69分钟 = 1小时9分钟<br>14:00 + 1小时9分钟 = 15:09" },
+            { problem: "小丽看一本书，每天看1小时30分钟。她从周一看到周五，总共看了多长时间？", answer: "7小时30分钟", solution: "每天1小时30分钟 = 90分钟<br>5天：5 × 90 = 450分钟 = 7小时30分钟" },
+            { problem: "小明做手工，第一部分用了45分钟，休息15分钟后，第二部分用了1小时20分钟。整个过程用了多长时间？", answer: "2小时20分钟", solution: "第一部分：45分钟<br>休息：15分钟<br>第二部分：1小时20分钟 = 80分钟<br>总计：45 + 15 + 80 = 140分钟 = 2小时20分钟" },
+            { problem: "飞机原定11:30起飞，延误了1小时15分钟，实际几点起飞？", answer: "12:45", solution: "11:30 + 1小时 = 12:30<br>12:30 + 15分钟 = 12:45" },
+            { problem: "一场演出分三部分，第一部分40分钟，第二部分50分钟，第三部分45分钟，中间各休息10分钟。如果19:00开始，几点结束？", answer: "21:35", solution: "第一部分：40分钟（19:00-19:40）<br>休息10分钟（19:40-19:50）<br>第二部分：50分钟（19:50-20:40）<br>休息10分钟（20:40-20:50）<br>第三部分：45分钟（20:50-21:35）" },
+            { problem: "小华写作业，语文用了45分钟，数学比语文多用20分钟，英语用了40分钟。他6:30开始写，几点完成？", answer: "8:15", solution: "语文：45分钟<br>数学：45 + 20 = 65分钟 = 1小时5分钟<br>英语：40分钟<br>总时间：45+65+40=150分钟=2小时30分钟<br>6:30 + 2小时30分钟 = 9:00" },
+            { problem: "火车从A站到B站需要4小时20分钟，从B站到C站需要3小时40分钟。如果8:00从A站出发，几点到达C站？", answer: "16:00", solution: "A到B：4小时20分钟，8:00出发，12:20到达B站<br>B到C：3小时40分钟，12:20出发，16:00到达C站" },
+            { problem: "小刚参加夏令营活动，从7月1日9:00开始，到7月5日15:00结束。活动持续多长时间？", answer: "4天6小时", solution: "7月1日9:00到7月5日9:00是4天<br>7月5日9:00到15:00是6小时<br>总计：4天6小时" },
+            { problem: "小丽做实验，第一次用了1小时15分钟，第二次比第一次少用20分钟，第三次用了50分钟。三次实验总共用了多长时间？", answer: "2小时45分钟", solution: "第一次：1小时15分钟 = 75分钟<br>第二次：75 - 20 = 55分钟<br>第三次：50分钟<br>总计：75+55+50=180分钟=3小时" },
+            { problem: "小明跑步，第一圈用了5分钟，第二圈比第一圈快30秒，第三圈比第二圈慢15秒。三圈总共用了多长时间？", answer: "14分钟15秒", solution: "第一圈：5分钟<br>第二圈：5分钟 - 30秒 = 4分钟30秒<br>第三圈：4分钟30秒 + 15秒 = 4分钟45秒<br>总计：5分钟 + 4分钟30秒 + 4分钟45秒 = 13分钟75秒 = 14分钟15秒" },
+            { problem: "一场会议从14:30开始，原定17:00结束，但延长了45分钟。实际几点结束？", answer: "17:45", solution: "17:00 + 45分钟 = 17:45" },
+            { problem: "小华家到图书馆步行需要25分钟，骑车需要15分钟。他9:10从家出发骑车去图书馆，10:00前能返回家吗？", answer: "能", solution: "去程骑车：15分钟<br>假设在图书馆停留20分钟<br>回程骑车：15分钟<br>总时间：15+20+15=50分钟<br>9:10出发，10:00返回" }
+        ];
+        
+        // 生成题目卡片
+        function generateProblemCards(problems, containerId, type, difficulty) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = "";
+            
+            problems.forEach((problem, index) => {
+                const card = document.createElement("div");
+                card.className = "problem-card";
+                
+                card.innerHTML = `
+                    <div class="answer-header">
+                        <h3><span class="number">${index + 1}</span> ${type === 'arithmetic' ? '计算' : '解决问题'}</h3>
+                        ${type === 'application' ? `<span class="difficulty-tag ${difficulty === 'advanced' ? 'advanced-tag' : 'basic-tag'}">${difficulty === 'advanced' ? '提升题' : '基础题'}</span>` : ''}
+                    </div>
+                    <div class="problem-text">${problem.problem}</div>
+                    <input type="text" 
+                           class="answer-input" 
+                           placeholder="${type === 'arithmetic' ? '输入计算结果' : '输入答案'}"
+                           data-answer="${index}">
+                    
+                    <button class="show-answer-btn" data-answer="${index}">
+                        <i class="fas fa-key"></i> 显示正确答案
+                    </button>
+                    <div class="correct-answer" id="answer-${index}">
+                        正确答案: ${problem.answer}
+                    </div>
+                    
+                    <button class="toggle-solution">
+                        <i class="fas fa-lightbulb"></i> 查看解析
+                    </button>
+                    <div class="solution">
+                        <div class="solution-title"><i class="fas fa-calculator"></i> 解题思路</div>
+                        <div>${problem.solution}</div>
+                    </div>
+                `;
+                
+                // 添加解析切换功能
+                const toggleBtn = card.querySelector('.toggle-solution');
+                const solution = card.querySelector('.solution');
+                
+                toggleBtn.addEventListener('click', () => {
+                    if (solution.style.display === 'block') {
+                        solution.style.display = 'none';
+                        toggleBtn.innerHTML = '<i class="fas fa-lightbulb"></i> 查看解析';
+                    } else {
+                        solution.style.display = 'block';
+                        toggleBtn.innerHTML = '<i class="fas fa-times"></i> 收起解析';
+                    }
+                });
+                
+                // 添加显示答案按钮功能
+                const showAnswerBtn = card.querySelector('.show-answer-btn');
+                const correctAnswer = card.querySelector('.correct-answer');
+                
+                showAnswerBtn.addEventListener('click', () => {
+                    correctAnswer.style.display = 'block';
+                    showAnswerBtn.style.display = 'none';
+                });
+                
+                container.appendChild(card);
+            });
+        }
+        
+        // 初始化页面
+        function initPage() {
+            generateProblemCards(arithmeticProblems, "arithmetic-problems", "arithmetic", "");
+            
+            // 生成应用题卡片
+            generateProblemCards(basicTimeProblems, "basic-time-problems", "application", "basic");
+            generateProblemCards(advancedTimeProblems, "advanced-time-problems", "application", "advanced");
+            
+            // 主标签切换功能
+            document.querySelectorAll(".tab-btn").forEach(btn => {
+                btn.addEventListener("click", () => {
+                    document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+                    btn.classList.add("active");
+                    
+                    if (btn.dataset.tab === "arithmetic") {
+                        document.getElementById("arithmetic-section").style.display = "block";
+                        document.getElementById("application-section").style.display = "none";
+                    } else {
+                        document.getElementById("arithmetic-section").style.display = "none";
+                        document.getElementById("application-section").style.display = "block";
+                    }
+                });
+            });
+            
+            // 应用题内部选项卡切换
+            document.querySelectorAll(".inner-tab-btn").forEach(btn => {
+                btn.addEventListener("click", () => {
+                    document.querySelectorAll(".inner-tab-btn").forEach(b => b.classList.remove("active"));
+                    btn.classList.add("active");
+                    
+                    if (btn.dataset.innerTab === "basic") {
+                        document.getElementById("basic-time-problems").style.display = "grid";
+                        document.getElementById("advanced-time-problems").style.display = "none";
+                    } else {
+                        document.getElementById("basic-time-problems").style.display = "none";
+                        document.getElementById("advanced-time-problems").style.display = "grid";
+                    }
+                });
+            });
+            
+            // 检查答案功能
+            document.getElementById("check-btn").addEventListener("click", checkAnswers);
+            
+            // 重置功能
+            document.getElementById("reset-btn").addEventListener("click", () => {
+                document.querySelectorAll(".answer-input").forEach(input => {
+                    input.value = "";
+                    input.style.background = "white";
+                });
+                document.querySelectorAll(".correct-answer").forEach(el => {
+                    el.style.display = "none";
+                });
+                document.querySelectorAll(".show-answer-btn").forEach(btn => {
+                    btn.style.display = "block";
+                });
+                document.getElementById("result-message").style.display = "none";
+            });
+        }
+        
+        // 检查答案
+        function checkAnswers() {
+            const currentTab = document.querySelector(".tab-btn.active").dataset.tab;
+            let inputs, problems;
+            
+            if (currentTab === "arithmetic") {
+                inputs = document.querySelectorAll(`#${currentTab}-section .answer-input`);
+                problems = arithmeticProblems;
+            } else {
+                // 判断当前显示的是基础题还是提升题
+                const currentInnerTab = document.querySelector(".inner-tab-btn.active").dataset.innerTab;
+                if (currentInnerTab === "basic") {
+                    inputs = document.querySelectorAll(`#basic-time-problems .answer-input`);
+                    problems = basicTimeProblems;
+                } else {
+                    inputs = document.querySelectorAll(`#advanced-time-problems .answer-input`);
+                    problems = advancedTimeProblems;
+                }
+            }
+            
+            let correctCount = 0;
+            
+            inputs.forEach(input => {
+                const index = parseInt(input.dataset.answer);
+                let userAnswer = input.value.trim();
+                let correctAnswer = problems[index].answer;
+                
+                // 检查答案
+                if (userAnswer === correctAnswer) {
+                    input.style.background = "#e8f5e9";
+                    correctCount++;
+                } else {
+                    input.style.background = "#ffebee";
+                }
+            });
+            
+            // 显示结果
+            const resultElement = document.getElementById("result-message");
+            resultElement.style.display = "block";
+            
+            const total = inputs.length;
+            const percentage = Math.round((correctCount / total) * 100);
+            
+            if (percentage === 100) {
+                resultElement.className = "result-message correct";
+                resultElement.innerHTML = `
+                    <i class="fas fa-star"></i> 太棒了！全部正确！满分${total}分！
+                    <div style="margin-top: 10px; font-size: 1.5rem;">🎉 你是数学小天才！ 🎉</div>
+                `;
+            } else if (percentage >= 80) {
+                resultElement.className = "result-message correct";
+                resultElement.innerHTML = `
+                    <i class="fas fa-check-circle"></i> 做得很好！你答对了 ${correctCount} 题，共 ${total} 题
+                    <div style="margin-top: 10px;">得分: ${percentage}分</div>
+                `;
+            } else {
+                resultElement.className = "result-message incorrect";
+                resultElement.innerHTML = `
+                    <i class="fas fa-exclamation-circle"></i> 你答对了 ${correctCount} 题，共 ${total} 题
+                    <div style="margin-top: 10px;">得分: ${percentage}分，继续加油！</div>
+                `;
+            }
+        }
+        
+        // 页面加载完成后初始化
+        window.addEventListener("DOMContentLoaded", initPage);
+    </script>
+</body>
+</html>
