@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>圣诞快乐 - 圣诞节特效</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(to bottom, #0a2e38 0%, #1a5f7a 30%, #0a2e38 100%);
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 0;
+            position: relative;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            text-shadow: 0 0 15px #ff4d4d, 0 0 25px #ff4d4d;
+            margin-bottom: 10px;
+            letter-spacing: 3px;
+            color: #fff;
+            animation: glow 2s infinite alternate;
+        }
+        
+        .subtitle {
+            font-size: 1.5rem;
+            color: #a3d9ff;
+            margin-bottom: 30px;
+            text-shadow: 0 0 10px #00a8ff;
+        }
+        
+        .content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .left-column, .right-column {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .tree-container {
+            background: rgba(10, 30, 40, 0.6);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 0 30px rgba(0, 168, 255, 0.3);
+            border: 2px solid #00a8ff;
+            position: relative;
+            overflow: hidden;
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+        
+        .tree {
+            position: relative;
+            width: 200px;
+            height: 300px;
+            margin: 0 auto 30px;
+        }
+        
+        .tree-part {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-left: 100px solid transparent;
+            border-right: 100px solid transparent;
+            border-bottom: 150px solid #0a7e0a;
+        }
+        
+        .tree-part:nth-child(1) {
+            bottom: 0;
+            border-bottom-color: #0a7e0a;
+        }
+        
+        .tree-part:nth-child(2) {
+            bottom: 100px;
+            width: 0;
+            height: 0;
+            border-left: 80px solid transparent;
+            border-right: 80px solid transparent;
+            border-bottom: 120px solid #0b8e0b;
+        }
+        
+        .tree-part:nth-child(3) {
+            bottom: 180px;
+            width: 0;
+            height: 0;
+            border-left: 60px solid transparent;
+            border-right: 60px solid transparent;
+            border-bottom: 100px solid #0c9e0c;
+        }
+        
+        .tree-trunk {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 50px;
+            background: #8B4513;
+            z-index: 1;
+        }
+        
+        .decoration {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            z-index: 5;
+        }
+        
+        .decoration.red { background-color: #ff3838; box-shadow: 0 0 10px #ff3838; }
+        .decoration.blue { background-color: #18dcff; box-shadow: 0 0 10px #18dcff; }
+        .decoration.gold { background-color: #ffaf40; box-shadow: 0 0 10px #ffaf40; }
+        .decoration.silver { background-color: #c0c0c0; box-shadow: 0 0 10px #c0c0c0; }
+        
+        .star {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: gold;
+            font-size: 2.5rem;
+            text-shadow: 0 0 15px gold;
+            z-index: 10;
+            animation: spin 4s linear infinite;
+        }
+        
+        .gifts {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .gift {
+            width: 60px;
+            height: 60px;
+            border-radius: 5px;
+            position: relative;
+        }
+        
+        .gift.red { background: linear-gradient(to right, #ff3838, #ff6b6b); }
+        .gift.green { background: linear-gradient(to right, #0be881, #0fbcf9); }
+        .gift.blue { background: linear-gradient(to right, #3498db, #2980b9); }
+        
+        .gift-ribbon {
+            position: absolute;
+            background: gold;
+        }
+        
+        .gift-ribbon.horizontal {
+            width: 100%;
+            height: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        .gift-ribbon.vertical {
+            height: 100%;
+            width: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .santa-container {
+            position: relative;
+            margin-top: 40px;
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .santa {
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            background: #ff3838;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            bottom: 0;
+            left: -200px;
+            z-index: 15;
+            animation: santaMove 25s linear infinite;
+        }
+        
+        .santa-face {
+            position: absolute;
+            width: 120px;
+            height: 140px;
+            background: #ffccaa;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            top: 30px;
+            left: 30px;
+        }
+        
+        .santa-hat {
+            position: absolute;
+            width: 180px;
+            height: 100px;
+            background: #ff3838;
+            border-radius: 50% 50% 0 0;
+            top: -40px;
+            left: 0;
+            z-index: 20;
+        }
+        
+        .santa-hat:after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 50%;
+            top: -10px;
+            right: 20px;
+        }
+        
+        .sleigh {
+            position: absolute;
+            width: 200px;
+            height: 20px;
+            background: #c0392b;
+            border-radius: 10px;
+            bottom: 10px;
+            left: -200px;
+            z-index: 14;
+            animation: santaMove 25s linear infinite;
+        }
+        
+        .sleigh:before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 40px;
+            background: #c0392b;
+            border-radius: 10px;
+            bottom: 0;
+            left: 20px;
+        }
+        
+        .sleigh:after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 40px;
+            background: #c0392b;
+            border-radius: 10px;
+            bottom: 0;
+            right: 20px;
+        }
+        
+        .controls {
+            background: rgba(10, 30, 40, 0.7);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 0 30px rgba(255, 56, 56, 0.3);
+            border: 2px solid #ff3838;
+            margin-top: 30px;
+        }
+        
+        .controls h2 {
+            color: #ffaf40;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.8rem;
+        }
+        
+        .control-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 160px;
+            justify-content: center;
+        }
+        
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-music {
+            background: linear-gradient(to right, #ff3838, #ff6b6b);
+            color: white;
+        }
+        
+        .btn-snow {
+            background: linear-gradient(to right, #18dcff, #7d5fff);
+            color: white;
+        }
+        
+        .btn-lights {
+            background: linear-gradient(to right, #ffaf40, #fffa65);
+            color: #333;
+        }
+        
+        .btn-card {
+            background: linear-gradient(to right, #0be881, #0fbcf9);
+            color: white;
+        }
+        
+        .message-container {
+            background: rgba(10, 30, 40, 0.7);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 0 30px rgba(255, 175, 64, 0.3);
+            border: 2px solid #ffaf40;
+            margin-top: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .message-container h2 {
+            color: #18dcff;
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+        }
+        
+        .message {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: #e0f7ff;
+            text-align: justify;
+        }
+        
+        .signature {
+            text-align: right;
+            margin-top: 20px;
+            font-style: italic;
+            color: #ffaf40;
+            font-size: 1.3rem;
+        }
+        
+        .snowflakes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .snowflake {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.8;
+            top: -10px;
+        }
+        
+        .lights {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+        
+        .light {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            animation: lightTwinkle 1.5s infinite alternate;
+        }
+        
+        .card-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s;
+        }
+        
+        .card-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .card {
+            background: linear-gradient(to bottom right, #ff3838, #0a2e38);
+            width: 90%;
+            max-width: 600px;
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 0 50px rgba(255, 56, 56, 0.5);
+            position: relative;
+            transform: scale(0.8);
+            transition: transform 0.5s;
+        }
+        
+        .card-modal.active .card {
+            transform: scale(1);
+        }
+        
+        .card h2 {
+            font-size: 2.5rem;
+            color: gold;
+            margin-bottom: 20px;
+            text-shadow: 0 0 15px gold;
+        }
+        
+        .card p {
+            font-size: 1.3rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            color: #fff;
+        }
+        
+        .close-card {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #a3d9ff;
+            font-size: 1rem;
+            border-top: 1px solid rgba(163, 217, 255, 0.3);
+        }
+        
+        /* Animations */
+        @keyframes glow {
+            0% { text-shadow: 0 0 15px #ff4d4d, 0 0 25px #ff4d4d; }
+            100% { text-shadow: 0 0 20px #ff4d4d, 0 0 30px #ff4d4d, 0 0 40px #ff4d4d; }
+        }
+        
+        @keyframes spin {
+            0% { transform: translateX(-50%) rotate(0deg); }
+            100% { transform: translateX(-50%) rotate(360deg); }
+        }
+        
+        @keyframes santaMove {
+            0% { left: -200px; }
+            100% { left: calc(100% + 200px); }
+        }
+        
+        @keyframes lightTwinkle {
+            0% { opacity: 0.3; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        
+        @keyframes decorationGlow {
+            0%, 100% { opacity: 0.7; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.1); }
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .content {
+                flex-direction: column;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .btn {
+                min-width: 140px;
+                padding: 10px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 雪花背景 -->
+    <div class="snowflakes" id="snowflakes"></div>
+    
+    <!-- 闪烁灯光 -->
+    <div class="lights" id="lights"></div>
+    
+    <!-- 圣诞贺卡模态框 -->
+    <div class="card-modal" id="cardModal">
+        <div class="card">
+            <button class="close-card" id="closeCard">&times;</button>
+            <h2>圣诞快乐！</h2>
+            <p>愿这个圣诞季节充满欢乐、和平与爱。</p>
+            <p>愿您与家人朋友共享温馨时光，创造美好回忆。</p>
+            <p>愿新的一年为您带来健康、幸福和成功。</p>
+            <p>圣诞的钟声即将敲响，祝福的歌声随风飘扬。</p>
+            <p>祝您圣诞快乐，新年如意！</p>
+            <div class="signature">—— 来自远方的祝福</div>
+        </div>
+    </div>
+    
+    <div class="container">
+        <header>
+            <h1>圣诞快乐！</h1>
+            <p class="subtitle">Merry Christmas & Happy New Year</p>
+        </header>
+        
+        <div class="content">
+            <div class="left-column">
+                <div class="tree-container">
+                    <div class="tree">
+                        <div class="tree-part"></div>
+                        <div class="tree-part"></div>
+                        <div class="tree-part"></div>
+                        <div class="tree-trunk"></div>
+                        <div class="star">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <!-- 装饰品通过JS动态添加 -->
+                    </div>
+                    
+                    <div class="gifts">
+                        <div class="gift red">
+                            <div class="gift-ribbon horizontal"></div>
+                            <div class="gift-ribbon vertical"></div>
+                        </div>
+                        <div class="gift green">
+                            <div class="gift-ribbon horizontal"></div>
+                            <div class="gift-ribbon vertical"></div>
+                        </div>
+                        <div class="gift blue">
+                            <div class="gift-ribbon horizontal"></div>
+                            <div class="gift-ribbon vertical"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="santa-container">
+                    <div class="santa">
+                        <div class="santa-face"></div>
+                        <div class="santa-hat"></div>
+                    </div>
+                    <div class="sleigh"></div>
+                </div>
+            </div>
+            
+            <div class="right-column">
+                <div class="controls">
+                    <h2>圣诞控制面板</h2>
+                    <div class="control-buttons">
+                        <button class="btn btn-music" id="musicBtn">
+                            <i class="fas fa-music"></i> 圣诞音乐
+                        </button>
+                        <button class="btn btn-snow" id="snowBtn">
+                            <i class="fas fa-snowflake"></i> 雪花特效
+                        </button>
+                        <button class="btn btn-lights" id="lightsBtn">
+                            <i class="fas fa-lightbulb"></i> 闪烁灯光
+                        </button>
+                        <button class="btn btn-card" id="cardBtn">
+                            <i class="fas fa-gift"></i> 圣诞贺卡
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="message-container">
+                    <h2>圣诞祝福</h2>
+                    <div class="message">
+                        <p>圣诞节是分享爱与欢乐的时刻。在这个特别的日子里，愿平安、喜乐与温暖充满您的心房。</p>
+                        <p>圣诞树上挂满了闪烁的灯光和精美的装饰，每一样都代表着美好的祝愿。愿您的家庭充满和谐，愿您的生活充满阳光。</p>
+                        <p>当圣诞钟声响起，愿所有的烦恼都随风而去，只留下幸福与美好的回忆。</p>
+                    </div>
+                    <div class="signature">祝您和您的家人圣诞快乐！</div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2023 圣诞节特效 | 设计：圣诞快乐主题 | 祝您节日愉快！</p>
+        </footer>
+    </div>
+    
+    <!-- 圣诞音乐 -->
+    <audio id="christmasMusic" loop>
+        <source src="https://assets.mixkit.co/music/preview/mixkit-jingle-bells-311.mp3" type="audio/mpeg">
+    </audio>
+    
+    <script>
+        // 获取DOM元素
+        const musicBtn = document.getElementById('musicBtn');
+        const snowBtn = document.getElementById('snowBtn');
+        const lightsBtn = document.getElementById('lightsBtn');
+        const cardBtn = document.getElementById('cardBtn');
+        const closeCard = document.getElementById('closeCard');
+        const cardModal = document.getElementById('cardModal');
+        const snowflakesContainer = document.getElementById('snowflakes');
+        const lightsContainer = document.getElementById('lights');
+        const tree = document.querySelector('.tree');
+        const christmasMusic = document.getElementById('christmasMusic');
+        
+        // 状态变量
+        let snowActive = true;
+        let lightsActive = false;
+        let musicActive = false;
+        
+        // 初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 添加圣诞树装饰品
+            addTreeDecorations();
+            
+            // 创建雪花
+            createSnowflakes();
+            
+            // 创建闪烁灯光
+            createLights();
+            
+            // 设置按钮状态
+            updateButtonStates();
+        });
+        
+        // 添加圣诞树装饰品
+        function addTreeDecorations() {
+            // 装饰品位置（相对于圣诞树）
+            const decorations = [
+                {top: '40%', left: '50%', color: 'red'},
+                {top: '30%', left: '30%', color: 'blue'},
+                {top: '50%', left: '20%', color: 'gold'},
+                {top: '60%', left: '40%', color: 'silver'},
+                {top: '70%', left: '60%', color: 'red'},
+                {top: '50%', left: '70%', color: 'blue'},
+                {top: '30%', left: '65%', color: 'gold'},
+                {top: '40%', left: '35%', color: 'silver'},
+                {top: '55%', left: '55%', color: 'red'},
+                {top: '65%', left: '30%', color: 'blue'}
+            ];
+            
+            decorations.forEach(decoration => {
+                const decorationEl = document.createElement('div');
+                decorationEl.className = `decoration ${decoration.color}`;
+                decorationEl.style.top = decoration.top;
+                decorationEl.style.left = decoration.left;
+                decorationEl.style.animation = `decorationGlow ${1 + Math.random() * 2}s infinite alternate`;
+                tree.appendChild(decorationEl);
+            });
+        }
+        
+        // 创建雪花
+        function createSnowflakes() {
+            // 清除现有雪花
+            snowflakesContainer.innerHTML = '';
+            
+            // 创建新雪花
+            for (let i = 0; i < 80; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.className = 'snowflake';
+                
+                // 随机大小
+                const size = Math.random() * 8 + 2;
+                snowflake.style.width = `${size}px`;
+                snowflake.style.height = `${size}px`;
+                
+                // 随机位置
+                snowflake.style.left = `${Math.random() * 100}%`;
+                
+                // 随机透明度
+                snowflake.style.opacity = Math.random() * 0.7 + 0.3;
+                
+                // 随机动画延迟和持续时间
+                const delay = Math.random() * 10;
+                const duration = Math.random() * 10 + 10;
+                
+                snowflake.style.animation = `fall ${duration}s linear ${delay}s infinite`;
+                
+                // 添加到容器
+                snowflakesContainer.appendChild(snowflake);
+                
+                // 添加CSS动画
+                const style = document.createElement('style');
+                style.textContent = `
+                    @keyframes fall {
+                        0% {
+                            transform: translateY(-10px) translateX(0);
+                        }
+                        100% {
+                            transform: translateY(100vh) translateX(${Math.random() * 100 - 50}px);
+                        }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+        }
+        
+        // 创建闪烁灯光
+        function createLights() {
+            // 清除现有灯光
+            lightsContainer.innerHTML = '';
+            
+            // 创建新灯光
+            for (let i = 0; i < 50; i++) {
+                const light = document.createElement('div');
+                light.className = 'light';
+                
+                // 随机颜色
+                const colors = ['#ff3838', '#18dcff', '#ffaf40', '#fffa65', '#0be881'];
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                light.style.backgroundColor = color;
+                light.style.boxShadow = `0 0 10px ${color}`;
+                
+                // 随机位置
+                light.style.left = `${Math.random() * 100}%`;
+                light.style.top = `${Math.random() * 100}%`;
+                
+                // 随机大小
+                const size = Math.random() * 15 + 10;
+                light.style.width = `${size}px`;
+                light.style.height = `${size}px`;
+                
+                // 随机动画延迟
+                light.style.animationDelay = `${Math.random() * 2}s`;
+                
+                // 添加到容器
+                lightsContainer.appendChild(light);
+            }
+        }
+        
+        // 更新按钮状态
+        function updateButtonStates() {
+            // 雪花按钮
+            if (snowActive) {
+                snowBtn.innerHTML = '<i class="fas fa-snowflake"></i> 关闭雪花';
+                snowflakesContainer.style.display = 'block';
+            } else {
+                snowBtn.innerHTML = '<i class="fas fa-snowflake"></i> 雪花特效';
+                snowflakesContainer.style.display = 'none';
+            }
+            
+            // 灯光按钮
+            if (lightsActive) {
+                lightsBtn.innerHTML = '<i class="fas fa-lightbulb"></i> 关闭灯光';
+                lightsContainer.style.opacity = '1';
+            } else {
+                lightsBtn.innerHTML = '<i class="fas fa-lightbulb"></i> 闪烁灯光';
+                lightsContainer.style.opacity = '0';
+            }
+            
+            // 音乐按钮
+            if (musicActive) {
+                musicBtn.innerHTML = '<i class="fas fa-volume-up"></i> 关闭音乐';
+            } else {
+                musicBtn.innerHTML = '<i class="fas fa-music"></i> 圣诞音乐';
+            }
+        }
+        
+        // 事件监听器
+        musicBtn.addEventListener('click', function() {
+            musicActive = !musicActive;
+            
+            if (musicActive) {
+                christmasMusic.play().catch(e => {
+                    console.log("自动播放被阻止，请手动点击播放");
+                    musicActive = false;
+                    updateButtonStates();
+                });
+            } else {
+                christmasMusic.pause();
+            }
+            
+            updateButtonStates();
+        });
+        
+        snowBtn.addEventListener('click', function() {
+            snowActive = !snowActive;
+            
+            if (snowActive) {
+                createSnowflakes();
+            }
+            
+            updateButtonStates();
+        });
+        
+        lightsBtn.addEventListener('click', function() {
+            lightsActive = !lightsActive;
+            
+            if (lightsActive) {
+                createLights();
+            }
+            
+            updateButtonStates();
+        });
+        
+        cardBtn.addEventListener('click', function() {
+            cardModal.classList.add('active');
+        });
+        
+        closeCard.addEventListener('click', function() {
+            cardModal.classList.remove('active');
+        });
+        
+        // 点击模态框背景关闭
+        cardModal.addEventListener('click', function(e) {
+            if (e.target === cardModal) {
+                cardModal.classList.remove('active');
+            }
+        });
+        
+        // 添加键盘事件监听
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && cardModal.classList.contains('active')) {
+                cardModal.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
