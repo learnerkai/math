@@ -1,0 +1,1642 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>圣诞快乐 - 增强版圣诞节特效</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Mountains of Christmas', cursive, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        @import url('https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@400;700&display=swap');
+        
+        body {
+            background: radial-gradient(ellipse at bottom, #0d1d31 0%, #0c0d13 100%);
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* 夜空星星背景 */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            animation: twinkle var(--duration) infinite alternate;
+        }
+        
+        /* 圣诞主题背景装饰 */
+        .bg-decorations {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.6;
+        }
+        
+        .bg-deco {
+            position: absolute;
+            font-size: 4rem;
+            color: rgba(255, 50, 50, 0.2);
+        }
+        
+        /* 圣诞树灯光光晕效果 */
+        .tree-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 400px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(0,255,0,0.1) 0%, transparent 70%);
+            filter: blur(20px);
+            z-index: 1;
+            opacity: 0.7;
+            animation: pulse-glow 4s infinite alternate;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 0;
+            position: relative;
+        }
+        
+        .title-container {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            font-size: 4.5rem;
+            text-shadow: 
+                0 0 10px #ff0000,
+                0 0 20px #ff0000,
+                0 0 30px #ff0000,
+                0 0 40px #ff4d00;
+            margin-bottom: 10px;
+            letter-spacing: 5px;
+            color: #fff;
+            animation: glow 2s infinite alternate, float 6s ease-in-out infinite;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .title-shadow {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: rgba(255, 100, 100, 0.5);
+            z-index: 1;
+            font-size: 4.5rem;
+            letter-spacing: 5px;
+        }
+        
+        .subtitle {
+            font-size: 1.8rem;
+            color: #a3ffa3;
+            margin-bottom: 30px;
+            text-shadow: 0 0 15px #00ff00;
+            animation: subtitle-glow 3s infinite alternate;
+        }
+        
+        .snow-globe {
+            position: absolute;
+            top: 20px;
+            right: 50px;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(0, 200, 255, 0.5);
+            animation: globe-float 8s ease-in-out infinite;
+        }
+        
+        .snow-globe-content {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        
+        .snow-globe-content i {
+            font-size: 3rem;
+            color: gold;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px gold;
+        }
+        
+        .snow-globe-content span {
+            font-size: 0.9rem;
+            color: white;
+        }
+        
+        .content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .left-column, .right-column {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .tree-container {
+            background: rgba(10, 20, 30, 0.7);
+            border-radius: 25px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 
+                0 0 40px rgba(0, 255, 0, 0.5),
+                inset 0 0 30px rgba(0, 200, 0, 0.3);
+            border: 2px solid rgba(0, 255, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            backdrop-filter: blur(5px);
+        }
+        
+        .tree {
+            position: relative;
+            width: 220px;
+            height: 350px;
+            margin: 0 auto 30px;
+            filter: drop-shadow(0 0 10px rgba(0, 255, 0, 0.7));
+        }
+        
+        .tree-layer {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-left: var(--width) solid transparent;
+            border-right: var(--width) solid transparent;
+            border-bottom: var(--height) solid var(--color);
+            left: 50%;
+            transform: translateX(-50%);
+            filter: drop-shadow(0 5px 5px rgba(0, 0, 0, 0.5));
+        }
+        
+        .tree-trunk {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 35px;
+            height: 60px;
+            background: linear-gradient(to right, #8B4513, #A0522D, #8B4513);
+            z-index: 1;
+            border-radius: 5px;
+        }
+        
+        .decoration {
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            z-index: 5;
+            cursor: pointer;
+            transition: transform 0.3s, filter 0.3s;
+            animation: decoration-float 3s infinite alternate;
+        }
+        
+        .decoration:hover {
+            transform: scale(1.3);
+            filter: brightness(1.5);
+        }
+        
+        .decoration.red { 
+            background: radial-gradient(circle at 30% 30%, #ff6666, #cc0000);
+            box-shadow: 0 0 15px #ff0000;
+            animation-delay: var(--delay);
+        }
+        .decoration.blue { 
+            background: radial-gradient(circle at 30% 30%, #66ccff, #0066cc);
+            box-shadow: 0 0 15px #0066ff;
+            animation-delay: var(--delay);
+        }
+        .decoration.gold { 
+            background: radial-gradient(circle at 30% 30%, #ffdd66, #ffaa00);
+            box-shadow: 0 0 15px #ffaa00;
+            animation-delay: var(--delay);
+        }
+        .decoration.silver { 
+            background: radial-gradient(circle at 30% 30%, #eeeeee, #aaaaaa);
+            box-shadow: 0 0 15px #cccccc;
+            animation-delay: var(--delay);
+        }
+        .decoration.purple { 
+            background: radial-gradient(circle at 30% 30%, #cc66ff, #6600cc);
+            box-shadow: 0 0 15px #9900ff;
+            animation-delay: var(--delay);
+        }
+        
+        .star {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: gold;
+            font-size: 3.5rem;
+            text-shadow: 0 0 20px gold;
+            z-index: 10;
+            animation: spin 5s linear infinite, star-pulse 2s infinite alternate;
+            filter: drop-shadow(0 0 10px gold);
+        }
+        
+        .gifts {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .gift {
+            width: 70px;
+            height: 70px;
+            border-radius: 8px;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s;
+            animation: gift-bounce 2s infinite alternate;
+            animation-delay: var(--delay);
+        }
+        
+        .gift:hover {
+            transform: translateY(-10px);
+        }
+        
+        .gift.red { 
+            background: linear-gradient(135deg, #ff3838, #ff6b6b);
+            box-shadow: 0 10px 20px rgba(255, 56, 56, 0.5);
+        }
+        .gift.green { 
+            background: linear-gradient(135deg, #0be881, #0fbcf9);
+            box-shadow: 0 10px 20px rgba(11, 232, 129, 0.5);
+        }
+        .gift.blue { 
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            box-shadow: 0 10px 20px rgba(52, 152, 219, 0.5);
+        }
+        .gift.purple { 
+            background: linear-gradient(135deg, #9b59b6, #8e44ad);
+            box-shadow: 0 10px 20px rgba(155, 89, 182, 0.5);
+        }
+        
+        .gift-ribbon {
+            position: absolute;
+            background: linear-gradient(to right, gold, #ffcc00, gold);
+        }
+        
+        .gift-ribbon.horizontal {
+            width: 100%;
+            height: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        .gift-ribbon.vertical {
+            height: 100%;
+            width: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .gift-bow {
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            background: linear-gradient(to right, gold, #ffcc00);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+        }
+        
+        /* 圣诞老人雪橇优化 */
+        .santa-container {
+            position: relative;
+            margin-top: 40px;
+            height: 200px;
+            overflow: hidden;
+            border-radius: 15px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 10px;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+        
+        .santa-sled {
+            position: absolute;
+            width: 400px;
+            height: 180px;
+            bottom: 10px;
+            left: -400px;
+            z-index: 15;
+            animation: santaMove 20s linear infinite;
+        }
+        
+        .santa {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            background: #ff3838;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            bottom: 20px;
+            left: 140px;
+            z-index: 16;
+        }
+        
+        .santa-face {
+            position: absolute;
+            width: 80px;
+            height: 90px;
+            background: #ffccaa;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            top: 20px;
+            left: 20px;
+        }
+        
+        .santa-hat {
+            position: absolute;
+            width: 120px;
+            height: 70px;
+            background: #ff3838;
+            border-radius: 50% 50% 0 0;
+            top: -30px;
+            left: 0;
+            z-index: 17;
+        }
+        
+        .santa-hat:after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: white;
+            border-radius: 50%;
+            top: -5px;
+            right: 15px;
+        }
+        
+        .sled {
+            position: absolute;
+            width: 300px;
+            height: 30px;
+            background: linear-gradient(to right, #8B0000, #c0392b, #8B0000);
+            border-radius: 15px;
+            bottom: 0;
+            left: 0;
+            z-index: 15;
+        }
+        
+        .sled:before, .sled:after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 45px;
+            background: #c0392b;
+            border-radius: 10px;
+            bottom: 0;
+        }
+        
+        .sled:before { left: 30px; }
+        .sled:after { right: 30px; }
+        
+        .reindeer {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background: #8B4513;
+            border-radius: 40% 60% 40% 40%;
+            bottom: 40px;
+            left: 40px;
+            z-index: 14;
+        }
+        
+        .reindeer:before {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: #8B4513;
+            border-radius: 50% 50% 50% 0;
+            top: -20px;
+            left: 20px;
+            transform: rotate(-30deg);
+        }
+        
+        .controls {
+            background: rgba(10, 20, 30, 0.7);
+            border-radius: 25px;
+            padding: 30px;
+            box-shadow: 
+                0 0 40px rgba(255, 56, 56, 0.5),
+                inset 0 0 30px rgba(255, 100, 100, 0.3);
+            border: 2px solid rgba(255, 56, 56, 0.5);
+            margin-top: 30px;
+            backdrop-filter: blur(5px);
+        }
+        
+        .controls h2 {
+            color: #ffaf40;
+            margin-bottom: 25px;
+            text-align: center;
+            font-size: 2rem;
+            text-shadow: 0 0 10px #ffaf40;
+        }
+        
+        .control-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+        }
+        
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 180px;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .btn:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .btn:hover:before {
+            left: 100%;
+        }
+        
+        .btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.4);
+        }
+        
+        .btn:active {
+            transform: translateY(-2px) scale(1.02);
+        }
+        
+        .btn-music {
+            background: linear-gradient(to right, #ff3838, #ff6b6b);
+            color: white;
+        }
+        
+        .btn-snow {
+            background: linear-gradient(to right, #18dcff, #7d5fff);
+            color: white;
+        }
+        
+        .btn-lights {
+            background: linear-gradient(to right, #ffaf40, #fffa65);
+            color: #333;
+        }
+        
+        .btn-card {
+            background: linear-gradient(to right, #0be881, #0fbcf9);
+            color: white;
+        }
+        
+        .btn-fireworks {
+            background: linear-gradient(to right, #ff9a00, #ff0080);
+            color: white;
+        }
+        
+        .message-container {
+            background: rgba(10, 20, 30, 0.7);
+            border-radius: 25px;
+            padding: 30px;
+            box-shadow: 
+                0 0 40px rgba(255, 175, 64, 0.5),
+                inset 0 0 30px rgba(255, 200, 100, 0.3);
+            border: 2px solid rgba(255, 175, 64, 0.5);
+            margin-top: 30px;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(5px);
+        }
+        
+        .message-container:before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: linear-gradient(45deg, #ffaf40, #fffa65, #ffaf40);
+            z-index: -1;
+            filter: blur(20px);
+            opacity: 0.3;
+        }
+        
+        .message-container h2 {
+            color: #18dcff;
+            margin-bottom: 20px;
+            font-size: 2rem;
+            text-shadow: 0 0 10px #18dcff;
+        }
+        
+        .message {
+            font-size: 1.3rem;
+            line-height: 1.7;
+            color: #e0f7ff;
+            text-align: justify;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .signature {
+            text-align: right;
+            margin-top: 25px;
+            font-style: italic;
+            color: #ffaf40;
+            font-size: 1.5rem;
+            text-shadow: 0 0 5px #ffaf40;
+        }
+        
+        /* 雪花优化 */
+        .snowflakes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+        }
+        
+        .snowflake {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.8;
+            top: -10px;
+            filter: drop-shadow(0 0 5px white);
+        }
+        
+        .lights {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 3;
+            opacity: 0;
+            transition: opacity 0.8s;
+        }
+        
+        .light {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            animation: lightTwinkle 1.5s infinite alternate;
+            filter: blur(1px);
+        }
+        
+        /* 烟花特效 */
+        .fireworks {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 4;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+        
+        .firework {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            animation: fireworkExplode 1s ease-out forwards;
+        }
+        
+        /* 圣诞贺卡 */
+        .card-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .card-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .card {
+            background: linear-gradient(135deg, rgba(255, 56, 56, 0.9), rgba(10, 30, 40, 0.9));
+            width: 90%;
+            max-width: 700px;
+            border-radius: 30px;
+            padding: 50px;
+            text-align: center;
+            box-shadow: 
+                0 0 80px rgba(255, 56, 56, 0.7),
+                0 0 200px rgba(0, 200, 255, 0.5);
+            position: relative;
+            transform: scale(0.7) rotateY(90deg);
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            overflow: hidden;
+        }
+        
+        .card:before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #ff0000, #00ff00, #0000ff, #ff0000);
+            z-index: -1;
+            filter: blur(20px);
+            opacity: 0.5;
+            background-size: 400%;
+            animation: card-glow 20s linear infinite;
+        }
+        
+        .card-modal.active .card {
+            transform: scale(1) rotateY(0);
+        }
+        
+        .card h2 {
+            font-size: 3rem;
+            color: gold;
+            margin-bottom: 30px;
+            text-shadow: 0 0 20px gold;
+            animation: card-title-glow 3s infinite alternate;
+        }
+        
+        .card p {
+            font-size: 1.5rem;
+            line-height: 1.8;
+            margin-bottom: 25px;
+            color: #fff;
+        }
+        
+        .close-card {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 2.5rem;
+            cursor: pointer;
+            transition: transform 0.3s, color 0.3s;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        
+        .close-card:hover {
+            transform: rotate(90deg);
+            color: #ff3838;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 30px;
+            color: #a3d9ff;
+            font-size: 1.2rem;
+            border-top: 1px solid rgba(163, 217, 255, 0.3);
+            position: relative;
+            z-index: 10;
+        }
+        
+        /* 性能优化 - 减少动画对性能的影响 */
+        .performance-optimize {
+            will-change: transform, opacity;
+            backface-visibility: hidden;
+        }
+        
+        /* 动画定义 */
+        @keyframes glow {
+            0% { text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 30px #ff0000; }
+            100% { text-shadow: 0 0 20px #ff0000, 0 0 40px #ff0000, 0 0 60px #ff0000, 0 0 80px #ff4d00; }
+        }
+        
+        @keyframes subtitle-glow {
+            0% { text-shadow: 0 0 10px #00ff00; }
+            100% { text-shadow: 0 0 20px #00ff00, 0 0 30px #00ff00; }
+        }
+        
+        @keyframes spin {
+            0% { transform: translateX(-50%) rotate(0deg); }
+            100% { transform: translateX(-50%) rotate(360deg); }
+        }
+        
+        @keyframes santaMove {
+            0% { left: -400px; }
+            100% { left: calc(100% + 400px); }
+        }
+        
+        @keyframes lightTwinkle {
+            0% { opacity: 0.3; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1.2); }
+        }
+        
+        @keyframes decoration-float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        @keyframes gift-bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        @keyframes globe-float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-10px) rotate(5deg); }
+            50% { transform: translateY(0) rotate(0deg); }
+            75% { transform: translateY(10px) rotate(-5deg); }
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 1; }
+        }
+        
+        @keyframes pulse-glow {
+            0% { opacity: 0.4; transform: translate(-50%, -50%) scale(0.9); }
+            100% { opacity: 0.8; transform: translate(-50%, -50%) scale(1.1); }
+        }
+        
+        @keyframes star-pulse {
+            0% { filter: drop-shadow(0 0 10px gold); }
+            100% { filter: drop-shadow(0 0 20px gold) brightness(1.5); }
+        }
+        
+        @keyframes fireworkExplode {
+            0% { transform: translate(0, 0) scale(1); opacity: 1; }
+            100% { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; }
+        }
+        
+        @keyframes card-glow {
+            0% { background-position: 0 0; }
+            50% { background-position: 400% 0; }
+            100% { background-position: 0 0; }
+        }
+        
+        @keyframes card-title-glow {
+            0% { text-shadow: 0 0 10px gold; }
+            100% { text-shadow: 0 0 30px gold, 0 0 50px gold; }
+        }
+        
+        /* 响应式设计优化 */
+        @media (max-width: 1200px) {
+            h1 {
+                font-size: 3.5rem;
+            }
+            
+            .snow-globe {
+                right: 20px;
+                width: 120px;
+                height: 120px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .content {
+                flex-direction: column;
+            }
+            
+            h1 {
+                font-size: 2.8rem;
+                letter-spacing: 3px;
+            }
+            
+            .title-shadow {
+                font-size: 2.8rem;
+            }
+            
+            .subtitle {
+                font-size: 1.4rem;
+            }
+            
+            .snow-globe {
+                position: relative;
+                top: 0;
+                right: 0;
+                margin: 0 auto 20px;
+                width: 100px;
+                height: 100px;
+            }
+            
+            .btn {
+                min-width: 160px;
+                padding: 12px 25px;
+            }
+            
+            .card {
+                padding: 30px;
+            }
+            
+            .card h2 {
+                font-size: 2.2rem;
+            }
+            
+            .card p {
+                font-size: 1.2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .title-shadow {
+                font-size: 2.2rem;
+            }
+            
+            .controls {
+                padding: 20px;
+            }
+            
+            .message-container {
+                padding: 20px;
+            }
+            
+            .btn {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 夜空星星 -->
+    <div class="stars" id="stars"></div>
+    
+    <!-- 背景装饰 -->
+    <div class="bg-decorations" id="bgDecorations"></div>
+    
+    <!-- 圣诞树光晕 -->
+    <div class="tree-glow"></div>
+    
+    <!-- 雪花特效 -->
+    <div class="snowflakes" id="snowflakes"></div>
+    
+    <!-- 闪烁灯光 -->
+    <div class="lights" id="lights"></div>
+    
+    <!-- 烟花特效 -->
+    <div class="fireworks" id="fireworks"></div>
+    
+    <!-- 圣诞贺卡模态框 -->
+    <div class="card-modal" id="cardModal">
+        <div class="card">
+            <button class="close-card" id="closeCard">&times;</button>
+            <h2>圣诞快乐！</h2>
+            <p>愿这个圣诞季节充满欢乐、和平与爱。</p>
+            <p>愿您与家人朋友共享温馨时光，创造美好回忆。</p>
+            <p>愿新的一年为您带来健康、幸福和成功。</p>
+            <p>圣诞的钟声即将敲响，祝福的歌声随风飘扬。</p>
+            <p>祝您圣诞快乐，新年如意！</p>
+            <div class="signature">—— 来自远方的祝福</div>
+        </div>
+    </div>
+    
+    <div class="container">
+        <header>
+            <div class="title-container">
+                <!-- <div class="title-shadow">圣诞快乐！</div> -->
+                <h1>圣诞快乐！</h1>
+            </div>
+            <p class="subtitle">Merry Christmas & Happy New Year</p>
+            
+            <!-- 雪花球 -->
+            <div class="snow-globe">
+                <div class="snow-globe-content">
+                    <i class="fas fa-tree"></i>
+                    <span>2025</span>
+                </div>
+            </div>
+        </header>
+        
+        <div class="content">
+            <div class="left-column">
+                <div class="tree-container">
+                    <div class="tree" id="christmasTree">
+                        <!-- 圣诞树图层 -->
+                        <div class="tree-layer" style="--width: 100px; --height: 150px; --color: #0a7e0a; bottom: 0;"></div>
+                        <div class="tree-layer" style="--width: 80px; --height: 120px; --color: #0b8e0b; bottom: 100px;"></div>
+                        <div class="tree-layer" style="--width: 60px; --height: 100px; --color: #0c9e0c; bottom: 180px;"></div>
+                        <div class="tree-trunk"></div>
+                        <div class="star">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <!-- 装饰品通过JS动态添加 -->
+                    </div>
+                    
+                    <div class="gifts">
+                        <div class="gift red" style="--delay: 0s;">
+                            <div class="gift-ribbon horizontal"></div>
+                            <div class="gift-ribbon vertical"></div>
+                            <div class="gift-bow"></div>
+                        </div>
+                        <div class="gift green" style="--delay: 0.2s;">
+                            <div class="gift-ribbon horizontal"></div>
+                            <div class="gift-ribbon vertical"></div>
+                            <div class="gift-bow"></div>
+                        </div>
+                        <div class="gift blue" style="--delay: 0.4s;">
+                            <div class="gift-ribbon horizontal"></div>
+                            <div class="gift-ribbon vertical"></div>
+                            <div class="gift-bow"></div>
+                        </div>
+                        <div class="gift purple" style="--delay: 0.6s;">
+                            <div class="gift-ribbon horizontal"></div>
+                            <div class="gift-ribbon vertical"></div>
+                            <div class="gift-bow"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="santa-container">
+                    <div class="santa-sled">
+                        <div class="reindeer"></div>
+                        <div class="santa">
+                            <div class="santa-face"></div>
+                            <div class="santa-hat"></div>
+                        </div>
+                        <div class="sled"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="right-column">
+                <div class="controls">
+                    <h2>圣诞控制中心</h2>
+                    <div class="control-buttons">
+                        <button class="btn btn-music" id="musicBtn">
+                            <i class="fas fa-music"></i> 圣诞音乐
+                        </button>
+                        <button class="btn btn-snow" id="snowBtn">
+                            <i class="fas fa-snowflake"></i> 雪花特效
+                        </button>
+                        <button class="btn btn-lights" id="lightsBtn">
+                            <i class="fas fa-lightbulb"></i> 闪烁灯光
+                        </button>
+                        <button class="btn btn-fireworks" id="fireworksBtn">
+                            <i class="fas fa-fire"></i> 烟花表演
+                        </button>
+                        <button class="btn btn-card" id="cardBtn">
+                            <i class="fas fa-gift"></i> 圣诞贺卡
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="message-container">
+                    <h2>圣诞祝福</h2>
+                    <div class="message">
+                        <p>圣诞节是分享爱与欢乐的时刻。在这个特别的日子里，愿平安、喜乐与温暖充满您的心房。</p>
+                        <p>圣诞树上挂满了闪烁的灯光和精美的装饰，每一样都代表着美好的祝愿。愿您的家庭充满和谐，愿您的生活充满阳光。</p>
+                        <p>当圣诞钟声响起，愿所有的烦恼都随风而去，只留下幸福与美好的回忆。</p>
+                    </div>
+                    <div class="signature">祝您和您的家人圣诞快乐！</div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2025 圣诞节特效 | 设计：圣诞快乐主题 | 祝您节日愉快！</p>
+        </footer>
+    </div>
+    
+    <!-- 圣诞音乐 -->
+    <audio id="christmasMusic" loop>
+        <source src="https://assets.mixkit.co/music/preview/mixkit-jingle-bells-311.mp3" type="audio/mpeg">
+    </audio>
+    
+    <!-- 装饰品点击音效 -->
+    <audio id="decorationSound">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-bell-notification-933.mp3" type="audio/mpeg">
+    </audio>
+    
+    <!-- 烟花音效 -->
+    <audio id="fireworkSound">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-explosion-with-flash-1496.mp3" type="audio/mpeg">
+    </audio>
+    
+    <script>
+        // 获取DOM元素
+        const musicBtn = document.getElementById('musicBtn');
+        const snowBtn = document.getElementById('snowBtn');
+        const lightsBtn = document.getElementById('lightsBtn');
+        const fireworksBtn = document.getElementById('fireworksBtn');
+        const cardBtn = document.getElementById('cardBtn');
+        const closeCard = document.getElementById('closeCard');
+        const cardModal = document.getElementById('cardModal');
+        const snowflakesContainer = document.getElementById('snowflakes');
+        const lightsContainer = document.getElementById('lights');
+        const fireworksContainer = document.getElementById('fireworks');
+        const starsContainer = document.getElementById('stars');
+        const bgDecorationsContainer = document.getElementById('bgDecorations');
+        const christmasTree = document.getElementById('christmasTree');
+        const christmasMusic = document.getElementById('christmasMusic');
+        const decorationSound = document.getElementById('decorationSound');
+        const fireworkSound = document.getElementById('fireworkSound');
+        
+        // 状态变量
+        let snowActive = true;
+        let lightsActive = false;
+        let musicActive = false;
+        let fireworksActive = false;
+        let snowIntensity = 1; // 雪花密度 1-3
+        
+        // 初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 创建夜空星星
+            createStars();
+            
+            // 创建背景装饰
+            createBackgroundDecorations();
+            
+            // 添加圣诞树装饰品
+            addTreeDecorations();
+            
+            // 创建雪花
+            createSnowflakes();
+            
+            // 创建闪烁灯光
+            createLights();
+            
+            // 设置按钮状态
+            updateButtonStates();
+            
+            // 预加载音频
+            preloadAudio();
+            
+            // 添加性能优化类
+            addPerformanceOptimizations();
+        });
+        
+        // 创建夜空星星
+        function createStars() {
+            // 清除现有星星
+            starsContainer.innerHTML = '';
+            
+            // 创建星星
+            for (let i = 0; i < 150; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                
+                // 随机大小
+                const size = Math.random() * 3 + 1;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                
+                // 随机位置
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                
+                // 随机动画持续时间
+                const duration = Math.random() * 5 + 3;
+                star.style.setProperty('--duration', `${duration}s`);
+                
+                // 添加到容器
+                starsContainer.appendChild(star);
+            }
+        }
+        
+        // 创建背景装饰
+        function createBackgroundDecorations() {
+            const decorations = ['❄', '🎄', '🎁', '⭐', '🔔', '🎅'];
+            
+            for (let i = 0; i < 25; i++) {
+                const deco = document.createElement('div');
+                deco.className = 'bg-deco';
+                deco.textContent = decorations[Math.floor(Math.random() * decorations.length)];
+                
+                // 随机位置
+                deco.style.left = `${Math.random() * 100}%`;
+                deco.style.top = `${Math.random() * 100}%`;
+                
+                // 随机大小
+                const size = Math.random() * 4 + 2;
+                deco.style.fontSize = `${size}rem`;
+                
+                // 随机旋转
+                const rotation = Math.random() * 360;
+                deco.style.transform = `rotate(${rotation}deg)`;
+                
+                // 随机动画
+                const duration = Math.random() * 10 + 10;
+                deco.style.animation = `float ${duration}s ease-in-out infinite`;
+                deco.style.animationDelay = `${Math.random() * 5}s`;
+                
+                // 添加到容器
+                bgDecorationsContainer.appendChild(deco);
+            }
+        }
+        
+        // 添加圣诞树装饰品
+        function addTreeDecorations() {
+            // 装饰品位置（相对于圣诞树）
+            const decorations = [
+                {top: '40%', left: '50%', color: 'red', delay: '0s'},
+                {top: '30%', left: '30%', color: 'blue', delay: '0.5s'},
+                {top: '50%', left: '20%', color: 'gold', delay: '1s'},
+                {top: '60%', left: '40%', color: 'silver', delay: '1.5s'},
+                {top: '70%', left: '60%', color: 'red', delay: '2s'},
+                {top: '50%', left: '70%', color: 'blue', delay: '2.5s'},
+                {top: '30%', left: '65%', color: 'gold', delay: '3s'},
+                {top: '40%', left: '35%', color: 'silver', delay: '3.5s'},
+                {top: '55%', left: '55%', color: 'purple', delay: '0.2s'},
+                {top: '65%', left: '30%', color: 'purple', delay: '0.7s'},
+                {top: '25%', left: '45%', color: 'gold', delay: '1.2s'},
+                {top: '45%', left: '80%', color: 'blue', delay: '1.7s'},
+                {top: '75%', left: '75%', color: 'red', delay: '2.2s'},
+                {top: '35%', left: '20%', color: 'silver', delay: '2.7s'},
+                {top: '60%', left: '10%', color: 'gold', delay: '3.2s'}
+            ];
+            
+            decorations.forEach(decoration => {
+                const decorationEl = document.createElement('div');
+                decorationEl.className = `decoration ${decoration.color} performance-optimize`;
+                decorationEl.style.top = decoration.top;
+                decorationEl.style.left = decoration.left;
+                decorationEl.style.setProperty('--delay', decoration.delay);
+                
+                // 添加点击事件
+                decorationEl.addEventListener('click', function() {
+                    // 播放音效
+                    decorationSound.currentTime = 0;
+                    decorationSound.play().catch(e => console.log("音效播放被阻止"));
+                    
+                    // 添加点击效果
+                    this.style.transform = 'scale(1.5)';
+                    this.style.filter = 'brightness(2)';
+                    
+                    setTimeout(() => {
+                        this.style.transform = '';
+                        this.style.filter = '';
+                    }, 300);
+                });
+                
+                christmasTree.appendChild(decorationEl);
+            });
+        }
+        
+        // 创建雪花
+        function createSnowflakes() {
+            // 清除现有雪花
+            snowflakesContainer.innerHTML = '';
+            
+            // 根据密度创建雪花
+            const snowflakeCount = 50 * snowIntensity;
+            
+            for (let i = 0; i < snowflakeCount; i++) {
+                createSnowflake();
+            }
+        }
+        
+        // 创建单个雪花
+        function createSnowflake() {
+            const snowflake = document.createElement('div');
+            snowflake.className = 'snowflake performance-optimize';
+            
+            // 随机大小
+            const size = Math.random() * 8 + 2;
+            snowflake.style.width = `${size}px`;
+            snowflake.style.height = `${size}px`;
+            
+            // 随机位置
+            snowflake.style.left = `${Math.random() * 100}%`;
+            
+            // 随机透明度
+            snowflake.style.opacity = Math.random() * 0.7 + 0.3;
+            
+            // 随机动画延迟和持续时间
+            const delay = Math.random() * 10;
+            const duration = Math.random() * 10 + 10;
+            
+            // 创建动画
+            const animationName = `fall-${Math.random().toString(36).substr(2, 9)}`;
+            const style = document.createElement('style');
+            
+            // 随机飘落路径
+            const xMovement = Math.random() * 100 - 50;
+            
+            style.textContent = `
+                @keyframes ${animationName} {
+                    0% {
+                        transform: translateY(-10px) translateX(0);
+                    }
+                    100% {
+                        transform: translateY(100vh) translateX(${xMovement}px);
+                    }
+                }
+            `;
+            
+            document.head.appendChild(style);
+            
+            snowflake.style.animation = `${animationName} ${duration}s linear ${delay}s infinite`;
+            
+            // 添加到容器
+            snowflakesContainer.appendChild(snowflake);
+            
+            // 雪花落地后重新开始
+            setTimeout(() => {
+                if (snowActive && snowflake.parentNode) {
+                    snowflake.remove();
+                    createSnowflake();
+                }
+            }, (duration + delay) * 1000);
+        }
+        
+        // 创建闪烁灯光
+        function createLights() {
+            // 清除现有灯光
+            lightsContainer.innerHTML = '';
+            
+            // 创建新灯光
+            for (let i = 0; i < 80; i++) {
+                const light = document.createElement('div');
+                light.className = 'light performance-optimize';
+                
+                // 随机颜色
+                const colors = ['#ff3838', '#18dcff', '#ffaf40', '#fffa65', '#0be881', '#9b59b6'];
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                light.style.backgroundColor = color;
+                light.style.boxShadow = `0 0 15px ${color}`;
+                
+                // 随机位置
+                light.style.left = `${Math.random() * 100}%`;
+                light.style.top = `${Math.random() * 100}%`;
+                
+                // 随机大小
+                const size = Math.random() * 20 + 10;
+                light.style.width = `${size}px`;
+                light.style.height = `${size}px`;
+                
+                // 随机动画延迟
+                light.style.animationDelay = `${Math.random() * 2}s`;
+                
+                // 添加到容器
+                lightsContainer.appendChild(light);
+            }
+        }
+        
+        // 创建烟花
+        function createFirework(x, y) {
+            const colors = ['#ff3838', '#18dcff', '#ffaf40', '#0be881', '#9b59b6', '#ffffff'];
+            const particleCount = 50 + Math.floor(Math.random() * 50);
+            
+            // 播放烟花音效
+            fireworkSound.currentTime = 0;
+            fireworkSound.play().catch(e => console.log("音效播放被阻止"));
+            
+            for (let i = 0; i < particleCount; i++) {
+                const firework = document.createElement('div');
+                firework.className = 'firework performance-optimize';
+                
+                // 随机颜色
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                firework.style.backgroundColor = color;
+                firework.style.boxShadow = `0 0 10px ${color}`;
+                
+                // 设置位置
+                firework.style.left = `${x}px`;
+                firework.style.top = `${y}px`;
+                
+                // 随机运动方向
+                const angle = Math.random() * Math.PI * 2;
+                const speed = 2 + Math.random() * 4;
+                const tx = Math.cos(angle) * speed * 50;
+                const ty = Math.sin(angle) * speed * 50;
+                
+                firework.style.setProperty('--tx', `${tx}px`);
+                firework.style.setProperty('--ty', `${ty}px`);
+                
+                // 随机大小
+                const size = 3 + Math.random() * 5;
+                firework.style.width = `${size}px`;
+                firework.style.height = `${size}px`;
+                
+                // 添加到容器
+                fireworksContainer.appendChild(firework);
+                
+                // 动画结束后移除
+                setTimeout(() => {
+                    if (firework.parentNode) {
+                        firework.remove();
+                    }
+                }, 1000);
+            }
+        }
+        
+        // 随机发射烟花
+        function launchRandomFirework() {
+            if (!fireworksActive) return;
+            
+            const x = Math.random() * window.innerWidth;
+            const y = Math.random() * window.innerHeight * 0.8;
+            
+            createFirework(x, y);
+            
+            // 随机时间后发射下一个
+            const nextLaunch = 300 + Math.random() * 700;
+            setTimeout(launchRandomFirework, nextLaunch);
+        }
+        
+        // 更新按钮状态
+        function updateButtonStates() {
+            // 雪花按钮
+            if (snowActive) {
+                snowBtn.innerHTML = '<i class="fas fa-snowflake"></i> 减少雪花';
+                snowflakesContainer.style.display = 'block';
+            } else {
+                snowBtn.innerHTML = '<i class="fas fa-snowflake"></i> 雪花特效';
+                snowflakesContainer.style.display = 'none';
+            }
+            
+            // 灯光按钮
+            if (lightsActive) {
+                lightsBtn.innerHTML = '<i class="fas fa-lightbulb"></i> 关闭灯光';
+                lightsContainer.style.opacity = '1';
+            } else {
+                lightsBtn.innerHTML = '<i class="fas fa-lightbulb"></i> 闪烁灯光';
+                lightsContainer.style.opacity = '0';
+            }
+            
+            // 音乐按钮
+            if (musicActive) {
+                musicBtn.innerHTML = '<i class="fas fa-volume-up"></i> 关闭音乐';
+            } else {
+                musicBtn.innerHTML = '<i class="fas fa-music"></i> 圣诞音乐';
+            }
+            
+            // 烟花按钮
+            if (fireworksActive) {
+                fireworksBtn.innerHTML = '<i class="fas fa-fire"></i> 关闭烟花';
+                fireworksContainer.style.opacity = '1';
+            } else {
+                fireworksBtn.innerHTML = '<i class="fas fa-fire"></i> 烟花表演';
+                fireworksContainer.style.opacity = '0';
+            }
+        }
+        
+        // 预加载音频
+        function preloadAudio() {
+            // 预加载音乐
+            christmasMusic.load();
+            
+            // 预加载音效
+            decorationSound.load();
+            fireworkSound.load();
+        }
+        
+        // 添加性能优化类
+        function addPerformanceOptimizations() {
+            // 为所有动画元素添加性能优化类
+            const animatedElements = document.querySelectorAll('.star, .snowflake, .light, .decoration, .gift, .santa-sled, .bg-deco');
+            animatedElements.forEach(el => {
+                el.classList.add('performance-optimize');
+            });
+        }
+        
+        // 事件监听器
+        musicBtn.addEventListener('click', function() {
+            musicActive = !musicActive;
+            
+            if (musicActive) {
+                christmasMusic.play().catch(e => {
+                    console.log("自动播放被阻止，请手动点击播放");
+                    musicActive = false;
+                    updateButtonStates();
+                });
+            } else {
+                christmasMusic.pause();
+            }
+            
+            updateButtonStates();
+        });
+        
+        snowBtn.addEventListener('click', function() {
+            if (snowActive) {
+                // 如果雪花已开启，增加密度
+                snowIntensity++;
+                if (snowIntensity > 3) {
+                    snowIntensity = 1;
+                    snowActive = false;
+                } else {
+                    // 重新创建更多雪花
+                    createSnowflakes();
+                }
+            } else {
+                // 如果雪花关闭，则开启
+                snowActive = true;
+                snowIntensity = 1;
+                createSnowflakes();
+            }
+            
+            updateButtonStates();
+        });
+        
+        lightsBtn.addEventListener('click', function() {
+            lightsActive = !lightsActive;
+            
+            if (lightsActive) {
+                createLights();
+            }
+            
+            updateButtonStates();
+        });
+        
+        fireworksBtn.addEventListener('click', function() {
+            fireworksActive = !fireworksActive;
+            
+            if (fireworksActive) {
+                // 开始发射烟花
+                launchRandomFirework();
+            } else {
+                // 清除所有烟花
+                fireworksContainer.innerHTML = '';
+            }
+            
+            updateButtonStates();
+        });
+        
+        // 点击页面任意位置发射烟花
+        document.addEventListener('click', function(e) {
+            if (fireworksActive && e.target.id !== 'fireworksBtn') {
+                createFirework(e.clientX, e.clientY);
+            }
+        });
+        
+        cardBtn.addEventListener('click', function() {
+            cardModal.classList.add('active');
+            // 停止背景音乐播放
+            if (musicActive) {
+                christmasMusic.pause();
+            }
+        });
+        
+        closeCard.addEventListener('click', function() {
+            cardModal.classList.remove('active');
+            // 恢复背景音乐
+            if (musicActive) {
+                christmasMusic.play().catch(e => console.log("音乐恢复失败"));
+            }
+        });
+        
+        // 点击模态框背景关闭
+        cardModal.addEventListener('click', function(e) {
+            if (e.target === cardModal) {
+                cardModal.classList.remove('active');
+                // 恢复背景音乐
+                if (musicActive) {
+                    christmasMusic.play().catch(e => console.log("音乐恢复失败"));
+                }
+            }
+        });
+        
+        // 添加键盘事件监听
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && cardModal.classList.contains('active')) {
+                cardModal.classList.remove('active');
+                // 恢复背景音乐
+                if (musicActive) {
+                    christmasMusic.play().catch(e => console.log("音乐恢复失败"));
+                }
+            }
+            
+            // 空格键切换音乐
+            if (e.key === ' ' && !e.target.matches('button, input, textarea')) {
+                e.preventDefault();
+                musicBtn.click();
+            }
+            
+            // F键切换烟花
+            if (e.key === 'f' || e.key === 'F') {
+                fireworksBtn.click();
+            }
+        });
+        
+        // 窗口大小改变时重新调整
+        window.addEventListener('resize', function() {
+            // 简单的防抖处理
+            clearTimeout(window.resizeTimer);
+            window.resizeTimer = setTimeout(function() {
+                if (lightsActive) {
+                    createLights();
+                }
+            }, 250);
+        });
+        
+        // 添加鼠标移动特效
+        document.addEventListener('mousemove', function(e) {
+            if (!lightsActive) return;
+            
+            // 创建跟随鼠标的光点
+            const light = document.createElement('div');
+            light.className = 'light';
+            light.style.position = 'fixed';
+            light.style.left = `${e.clientX}px`;
+            light.style.top = `${e.clientY}px`;
+            light.style.width = '15px';
+            light.style.height = '15px';
+            light.style.backgroundColor = '#ffffff';
+            light.style.boxShadow = '0 0 20px #ffffff';
+            light.style.zIndex = '3';
+            light.style.pointerEvents = 'none';
+            light.style.animation = 'lightTwinkle 0.5s forwards';
+            
+            document.body.appendChild(light);
+            
+            // 移除光点
+            setTimeout(() => {
+                if (light.parentNode) {
+                    light.remove();
+                }
+            }, 500);
+        });
+    </script>
+</body>
+</html>
